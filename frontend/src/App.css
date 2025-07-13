@@ -1,0 +1,168 @@
+/* DevConnector App Styles */
+.App {
+  min-height: 100vh;
+}
+
+/* Landing page styles */
+.landing {
+  position: relative;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: white;
+}
+
+.landing::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.landing-content {
+  position: relative;
+  z-index: 1;
+}
+
+.landing h1 {
+  font-size: 4rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.landing p {
+  font-size: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+@media (max-width: 768px) {
+  .landing h1 {
+    font-size: 2.5rem;
+  }
+  
+  .landing p {
+    font-size: 1.2rem;
+  }
+}
+
+/* Form styles */
+.form-container {
+  max-width: 500px;
+  margin: 2rem auto;
+  padding: 2rem;
+}
+
+/* Profile avatar styles */
+.profile-avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* Post styles */
+.post {
+  border: 1px solid #e2e8f0;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  background: white;
+}
+
+.post-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.post-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 1rem;
+}
+
+.post-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.post-actions button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #6b7280;
+}
+
+.post-actions button:hover {
+  color: #3b82f6;
+}
+
+.post-actions button.liked {
+  color: #ef4444;
+}
+
+/* Comment styles */
+.comment {
+  border-left: 3px solid #e2e8f0;
+  margin-left: 1rem;
+  padding-left: 1rem;
+  margin-top: 1rem;
+}
+
+.comment-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.comment-avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 0.5rem;
+}
+
+/* Loading spinner */
+.spinner {
+  border: 4px solid #f3f4f6;
+  border-top: 4px solid #3b82f6;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+  margin: 2rem auto;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Responsive utilities */
+@media (max-width: 640px) {
+  .hide-sm {
+    display: none;
+  }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .post {
+    background: #1f2937;
+    border-color: #374151;
+    color: #f9fafb;
+  }
+}

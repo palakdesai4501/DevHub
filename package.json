@@ -6,12 +6,13 @@
   "scripts": {
     "start": "node backend/server.js",
     "server": "cd backend && npm run server",
-    "client": "cd frontend && npm start",
+    "client": "cd frontend && npm run dev",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "install-server": "cd backend && npm install",
     "install-client": "cd frontend && npm install",
     "install-all": "npm run install-server && npm run install-client",
     "build": "cd frontend && npm run build",
+    "preview": "cd frontend && npm run preview",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
@@ -26,5 +27,9 @@
   "license": "MIT",
   "devDependencies": {
     "concurrently": "^8.2.2"
+  },
+  "dependencies": {
+    "@tailwindcss/vite": "^4.1.11",
+    "tailwindcss": "^4.1.11"
   }
 }
