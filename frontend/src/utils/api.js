@@ -1,18 +1,19 @@
 import axios from 'axios';
 
+// Create axios instance
 const api = axios.create({
-  baseURL: 'http://localhost:5000/api',
+  baseURL: 'http://localhost:5001/api',
   headers: {
     'Content-Type': 'application/json'
   }
 });
 
-// Request interceptor to add token to headers
+// Interceptor to add auth token to requests
 api.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem('token');
     if (token) {
-      config.headers.authorization = `Bearer ${token}`;
+      config.headers['x-auth-token'] = token;
     }
     return config;
   },
@@ -21,14 +22,17 @@ api.interceptors.request.use(
   }
 );
 
-// Response interceptor to handle errors
+// Interceptor for responses
 api.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
-      // Token expired or invalid
+      // Token is invalid, remove it
       localStorage.removeItem('token');
-      window.location.href = '/login';
+      // Optionally redirect to login
+      if (window.location.pathname !== '/login') {
+        window.location.href = '/login';
+      }
     }
     return Promise.reject(error);
   }

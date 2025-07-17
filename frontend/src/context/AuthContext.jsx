@@ -1,4 +1,4 @@
-import { createContext, useContext, useReducer } from 'react';
+import { createContext, useContext, useReducer, useEffect, useMemo, useCallback } from 'react';
 import api from '../utils/api';
 
 // Initial state
@@ -10,12 +10,12 @@ const initialState = {
 };
 
 // Action types
-const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
-const REGISTER_FAIL = 'REGISTER_FAIL';
 const USER_LOADED = 'USER_LOADED';
 const AUTH_ERROR = 'AUTH_ERROR';
 const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 const LOGIN_FAIL = 'LOGIN_FAIL';
+const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
+const REGISTER_FAIL = 'REGISTER_FAIL';
 const LOGOUT = 'LOGOUT';
 
 // Reducer
@@ -35,7 +35,7 @@ const authReducer = (state, action) => {
       localStorage.setItem('token', payload.token);
       return {
         ...state,
-        ...payload,
+        token: payload.token,
         isAuthenticated: true,
         loading: false
       };
@@ -64,7 +64,7 @@ export const AuthProvider = ({ children }) => {
   const [state, dispatch] = useReducer(authReducer, initialState);
 
   // Load user
-  const loadUser = async () => {
+  const loadUser = useCallback(async () => {
     try {
       const res = await api.get('/auth');
       dispatch({
@@ -74,71 +74,100 @@ export const AuthProvider = ({ children }) => {
     } catch (err) {
       dispatch({ type: AUTH_ERROR });
     }
-  };
+  }, []);
 
   // Register user
-  const register = async (formData) => {
+  const register = useCallback(async (formData) => {
     try {
       const res = await api.post('/users', formData);
+      
+      // Store token immediately before calling loadUser
+      localStorage.setItem('token', res.data.token);
+      
       dispatch({
         type: REGISTER_SUCCESS,
         payload: res.data
       });
-      loadUser();
+      
+      // Load user after successful registration
+      await loadUser();
     } catch (err) {
-      const errors = err.response?.data?.errors;
-      if (errors) {
-        // Handle validation errors
-        errors.forEach(error => console.error(error.msg));
-      }
       dispatch({ type: REGISTER_FAIL });
+      
+      // Create detailed error message
+      let errorMessage = 'Registration failed. ';
+      if (err.response?.data?.errors) {
+        errorMessage += err.response.data.errors.map(error => error.msg).join(', ');
+      } else if (err.response?.data?.msg) {
+        errorMessage += err.response.data.msg;
+      } else {
+        errorMessage += 'Please try again.';
+      }
+      
+      throw new Error(errorMessage);
     }
-  };
+  }, [loadUser]);
 
   // Login user
-  const login = async (email, password) => {
-    const config = {
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    };
-
-    const body = JSON.stringify({ email, password });
-
+  const login = useCallback(async (email, password) => {
     try {
-      const res = await api.post('/auth', body, config);
+      const res = await api.post('/auth', { email, password });
+      
+      // Store token immediately before calling loadUser
+      localStorage.setItem('token', res.data.token);
+      
       dispatch({
         type: LOGIN_SUCCESS,
         payload: res.data
       });
-      loadUser();
+      
+      // Load user after successful login
+      await loadUser();
     } catch (err) {
-      const errors = err.response?.data?.errors;
-      if (errors) {
-        errors.forEach(error => console.error(error.msg));
-      }
       dispatch({ type: LOGIN_FAIL });
+      
+      // Create detailed error message
+      let errorMessage = '';
+      if (err.response?.data?.errors) {
+        errorMessage = err.response.data.errors.map(error => error.msg).join(', ');
+      } else if (err.response?.data?.msg) {
+        errorMessage = err.response.data.msg;
+      } else {
+        errorMessage = 'Login failed. Please try again.';
+      }
+      
+      throw new Error(errorMessage);
     }
-  };
+  }, [loadUser]);
 
   // Logout
-  const logout = () => {
+  const logout = useCallback(() => {
     dispatch({ type: LOGOUT });
-  };
+  }, []);
+
+  // Load user on app start if token exists
+  useEffect(() => {
+    if (localStorage.getItem('token')) {
+      loadUser();
+    } else {
+      dispatch({ type: AUTH_ERROR });
+    }
+  }, [loadUser]);
+
+  // Memoize context value to prevent unnecessary re-renders
+  const contextValue = useMemo(() => ({
+    token: state.token,
+    isAuthenticated: state.isAuthenticated,
+    loading: state.loading,
+    user: state.user,
+    register,
+    login,
+    logout,
+    loadUser
+  }), [state.token, state.isAuthenticated, state.loading, state.user, register, login, logout, loadUser]);
 
   return (
-    <AuthContext.Provider
-      value={{
-        token: state.token,
-        isAuthenticated: state.isAuthenticated,
-        loading: state.loading,
-        user: state.user,
-        register,
-        login,
-        logout,
-        loadUser
-      }}
-    >
+    <AuthContext.Provider value={contextValue}>
       {children}
     </AuthContext.Provider>
   );

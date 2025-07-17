@@ -1,107 +1,120 @@
-import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { FaCode, FaUser, FaSignOutAlt, FaSignInAlt, FaUserPlus } from 'react-icons/fa';
 import { useAuth } from '../../context/AuthContext';
 
 const Navbar = () => {
+  const { isAuthenticated, logout, user, loading } = useAuth();
   const location = useLocation();
-  const [isOpen, setIsOpen] = useState(false);
-  const { isAuthenticated, loading, logout } = useAuth();
 
-  const toggleNavbar = () => {
-    setIsOpen(!isOpen);
-  };
-
-  const handleLogout = () => {
+  const onLogout = () => {
     logout();
-    setIsOpen(false);
   };
-
-  const guestLinks = (
-    <>
-      <Link 
-        to="/profiles" 
-        className={`nav-link ${location.pathname === '/profiles' ? 'active' : ''}`}
-        onClick={() => setIsOpen(false)}
-      >
-        Developers
-      </Link>
-      <Link 
-        to="/register" 
-        className={`nav-link ${location.pathname === '/register' ? 'active' : ''}`}
-        onClick={() => setIsOpen(false)}
-      >
-        <FaUserPlus className="icon" />
-        <span className="hide-sm">Register</span>
-      </Link>
-      <Link 
-        to="/login" 
-        className={`nav-link ${location.pathname === '/login' ? 'active' : ''}`}
-        onClick={() => setIsOpen(false)}
-      >
-        <FaSignInAlt className="icon" />
-        <span className="hide-sm">Login</span>
-      </Link>
-    </>
-  );
 
   const authLinks = (
-    <>
-      <Link 
-        to="/profiles" 
-        className={`nav-link ${location.pathname === '/profiles' ? 'active' : ''}`}
-        onClick={() => setIsOpen(false)}
-      >
-        Developers
-      </Link>
-      <Link 
-        to="/posts" 
-        className={`nav-link ${location.pathname === '/posts' ? 'active' : ''}`}
-        onClick={() => setIsOpen(false)}
-      >
-        Posts
-      </Link>
-      <Link 
-        to="/dashboard" 
-        className={`nav-link ${location.pathname === '/dashboard' ? 'active' : ''}`}
-        onClick={() => setIsOpen(false)}
-      >
-        <FaUser className="icon" />
-        <span className="hide-sm">Dashboard</span>
-      </Link>
-      <a 
-        href="#!" 
-        className="nav-link" 
-        onClick={handleLogout}
-      >
-        <FaSignOutAlt className="icon" />
-        <span className="hide-sm">Logout</span>
-      </a>
-    </>
+    <ul className="flex items-center space-x-6">
+      <li>
+        <Link 
+          to="/profiles" 
+          className={`text-white hover:text-gray-300 transition-colors ${
+            location.pathname === '/profiles' ? 'text-yellow-300' : ''
+          }`}
+        >
+          Developers
+        </Link>
+      </li>
+      <li>
+        <Link 
+          to="/posts" 
+          className={`text-white hover:text-gray-300 transition-colors ${
+            location.pathname === '/posts' ? 'text-yellow-300' : ''
+          }`}
+        >
+          Posts
+        </Link>
+      </li>
+      <li>
+        <Link 
+          to="/dashboard" 
+          className={`text-white hover:text-gray-300 transition-colors ${
+            location.pathname === '/dashboard' ? 'text-yellow-300' : ''
+          }`}
+        >
+          <i className="fas fa-user mr-1"></i>
+          Dashboard
+        </Link>
+      </li>
+      <li>
+        <button
+          onClick={onLogout}
+          className="text-white hover:text-gray-300 transition-colors"
+        >
+          <i className="fas fa-sign-out-alt mr-1"></i>
+          Logout
+        </button>
+      </li>
+    </ul>
+  );
+
+  const guestLinks = (
+    <ul className="flex items-center space-x-6">
+      <li>
+        <Link 
+          to="/profiles" 
+          className={`text-white hover:text-gray-300 transition-colors ${
+            location.pathname === '/profiles' ? 'text-yellow-300' : ''
+          }`}
+        >
+          Developers
+        </Link>
+      </li>
+      <li>
+        <Link 
+          to="/register" 
+          className={`text-white hover:text-gray-300 transition-colors ${
+            location.pathname === '/register' ? 'text-yellow-300' : ''
+          }`}
+        >
+          Register
+        </Link>
+      </li>
+      <li>
+        <Link 
+          to="/login" 
+          className={`text-white hover:text-gray-300 transition-colors ${
+            location.pathname === '/login' ? 'text-yellow-300' : ''
+          }`}
+        >
+          Login
+        </Link>
+      </li>
+    </ul>
   );
 
   return (
-    <nav className="navbar">
-      <div className="container">
-        <div className="flex items-center justify-between py-4">
-          <Link to="/" className="navbar-brand">
-            <FaCode className="brand-icon" />
-            DevConnector
-          </Link>
+    <nav className="bg-gray-800 shadow-lg">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between h-16">
+          <div className="flex items-center">
+            <Link to="/" className="flex-shrink-0 flex items-center">
+              <i className="fas fa-code text-white text-xl mr-2"></i>
+              <span className="text-white text-xl font-bold">DevConnector</span>
+            </Link>
+          </div>
           
-          <button 
-            className="navbar-toggler" 
-            onClick={toggleNavbar}
-            aria-label="Toggle navigation"
-          >
-            <span className="navbar-toggler-icon"></span>
-          </button>
-
-          {!loading && (
-            <div className={`navbar-nav ${isOpen ? 'active' : 'hidden'} md:flex`}>
-              {isAuthenticated ? authLinks : guestLinks}
-            </div>
-          )}
+          <div className="flex items-center">
+            {/* Show user name if authenticated */}
+            {!loading && isAuthenticated && user && (
+              <span className="text-white mr-4">
+                Welcome, {user.name}!
+              </span>
+            )}
+            
+            {/* Show different links based on auth status */}
+            {!loading && (
+              <>
+                {isAuthenticated ? authLinks : guestLinks}
+              </>
+            )}
+          </div>
         </div>
       </div>
     </nav>
