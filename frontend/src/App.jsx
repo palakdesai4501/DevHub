@@ -9,6 +9,9 @@ import Register from './components/auth/Register';
 import Login from './components/auth/Login';
 import Dashboard from './components/dashboard/Dashboard';
 import ProfileForm from './components/profile/ProfileForm';
+import ProfileDetail from './components/profile/ProfileDetail';
+import AddExperience from './components/profile/AddExperience';
+import AddEducation from './components/profile/AddEducation';
 import Profiles from './components/profiles/Profiles';
 import './App.css';
 
@@ -112,7 +115,24 @@ function App() {
                   </ProtectedRoute>
                 } 
               />
+              <Route 
+                path="/add-experience" 
+                element={
+                  <ProtectedRoute>
+                    <AddExperience />
+                  </ProtectedRoute>
+                } 
+              />
+              <Route 
+                path="/add-education" 
+                element={
+                  <ProtectedRoute>
+                    <AddEducation />
+                  </ProtectedRoute>
+                } 
+              />
               <Route path="/profiles" element={<Profiles />} />
+              <Route path="/profile/:id" element={<ProfileDetail />} />
               <Route 
                 path="/posts" 
                 element={

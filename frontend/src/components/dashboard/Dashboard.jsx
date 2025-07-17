@@ -5,7 +5,7 @@ import { useProfile } from '../../context/ProfileContext';
 
 const Dashboard = () => {
   const { user } = useAuth();
-  const { profile, loading, getCurrentProfile, deleteAccount } = useProfile();
+  const { profile, loading, getCurrentProfile, deleteAccount, deleteExperience, deleteEducation } = useProfile();
 
   useEffect(() => {
     getCurrentProfile();
@@ -119,7 +119,11 @@ const Dashboard = () => {
                           </p>
                           {exp.description && <p className="text-gray-700 mt-2">{exp.description}</p>}
                         </div>
-                        <button className="text-red-600 hover:text-red-800">
+                        <button 
+                          onClick={() => deleteExperience(exp._id)}
+                          className="text-red-600 hover:text-red-800"
+                          title="Delete Experience"
+                        >
                           <i className="fas fa-times"></i>
                         </button>
                       </div>
@@ -145,7 +149,11 @@ const Dashboard = () => {
                           </p>
                           {edu.description && <p className="text-gray-700 mt-2">{edu.description}</p>}
                         </div>
-                        <button className="text-red-600 hover:text-red-800">
+                        <button 
+                          onClick={() => deleteEducation(edu._id)}
+                          className="text-red-600 hover:text-red-800"
+                          title="Delete Education"
+                        >
                           <i className="fas fa-times"></i>
                         </button>
                       </div>
