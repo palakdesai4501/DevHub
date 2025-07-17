@@ -88,10 +88,19 @@ const ProfileSchema = new mongoose.Schema({
     }
   ],
   social: {
+    youtube: {
+      type: String
+    },
+    twitter: {
+      type: String
+    },
+    facebook: {
+      type: String
+    },
     linkedin: {
       type: String
     },
-    github: {
+    instagram: {
       type: String
     }
   },
@@ -101,4 +110,4 @@ const ProfileSchema = new mongoose.Schema({
   }
 });
 
-module.exports = Profile = mongoose.model('profile', ProfileSchema); 
+module.exports = mongoose.model('profile', ProfileSchema); 

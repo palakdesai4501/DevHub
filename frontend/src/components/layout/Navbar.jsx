@@ -33,6 +33,20 @@ const Navbar = () => {
       </li>
       <li>
         <Link 
+          to="/notifications" 
+          className={`text-white hover:text-gray-300 transition-colors relative ${
+            location.pathname === '/notifications' ? 'text-yellow-300' : ''
+          }`}
+        >
+          <i className="fas fa-bell mr-1"></i>
+          Notifications
+          <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">
+            2
+          </span>
+        </Link>
+      </li>
+      <li>
+        <Link 
           to="/dashboard" 
           className={`text-white hover:text-gray-300 transition-colors ${
             location.pathname === '/dashboard' ? 'text-yellow-300' : ''

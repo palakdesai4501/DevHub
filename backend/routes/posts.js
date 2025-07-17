@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const { check, validationResult } = require("express-validator");
 const auth = require("../middleware/auth");
+const upload = require("../middleware/upload");
 
 const Post = require("../models/Post");
 const User = require("../models/User");
@@ -11,7 +12,11 @@ const User = require("../models/User");
 // @access   Private
 router.post(
   "/",
-  [auth, [check("text", "Text is required").not().isEmpty()]],
+  [
+    auth,
+    upload.single('image'),
+    [check("text", "Text is required").not().isEmpty()]
+  ],
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -21,13 +26,36 @@ router.post(
     try {
       const user = await User.findById(req.user.id).select("-password");
 
-      const newPost = new Post({
+      const postFields = {
         text: req.body.text,
         name: user.name,
         avatar: user.avatar,
         user: req.user.id,
-      });
+      };
 
+      // Add image if uploaded
+      if (req.file) {
+        postFields.image = req.file.path;
+      }
+
+      // Add category if provided
+      if (req.body.category) {
+        postFields.category = req.body.category;
+      }
+
+      // Add tags if provided
+      if (req.body.tags) {
+        try {
+          const tags = JSON.parse(req.body.tags);
+          if (Array.isArray(tags)) {
+            postFields.tags = tags;
+          }
+        } catch (err) {
+          console.error('Error parsing tags:', err);
+        }
+      }
+
+      const newPost = new Post(postFields);
       const post = await newPost.save();
 
       res.json(post);
@@ -88,7 +116,7 @@ router.delete("/:id", auth, async (req, res) => {
       return res.status(401).json({ msg: "User not authorized" });
     }
 
-    await post.remove();
+    await post.deleteOne();
 
     res.json({ msg: "Post removed" });
   } catch (err) {

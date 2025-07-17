@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useProfile } from '../../context/ProfileContext';
+import FollowButton from './FollowButton';
 
 const ProfileDetail = () => {
   const { id } = useParams();
@@ -75,6 +76,15 @@ const ProfileDetail = () => {
                   {profile.location}
                 </p>
               )}
+
+              {/* Follow Button */}
+              <div className="mt-4">
+                <FollowButton 
+                  userId={profile.user._id} 
+                  userName={profile.user.name}
+                  initialFollowers={0}
+                />
+              </div>
 
               {/* Social Links */}
               <div className="flex justify-center md:justify-start space-x-4">

@@ -4,12 +4,11 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const auth = require('../middleware/auth');
 const { check, validationResult } = require('express-validator');
-require('dotenv').config();
 
 const User = require('../models/User');
 
 // @route    GET api/auth
-// @desc     Get authenticated user
+// @desc     Get logged in user
 // @access   Private
 router.get('/', auth, async (req, res) => {
   try {
@@ -22,7 +21,7 @@ router.get('/', auth, async (req, res) => {
 });
 
 // @route    POST api/auth
-// @desc     Authenticate user & get token
+// @desc     Auth user & get token
 // @access   Public
 router.post(
   '/',
@@ -39,24 +38,18 @@ router.post(
     const { email, password } = req.body;
 
     try {
-      // See if user exists
       let user = await User.findOne({ email });
 
       if (!user) {
-        return res
-          .status(400)
-          .json({ errors: [{ msg: 'Invalid Credentials' }] });
+        return res.status(400).json({ msg: 'Invalid Credentials' });
       }
 
-      const isMatch = await bcrypt.compare(password, user.password);
+      const isMatch = await user.matchPassword(password);
 
       if (!isMatch) {
-        return res
-          .status(400)
-          .json({ errors: [{ msg: 'Invalid Credentials' }] });
+        return res.status(400).json({ msg: 'Invalid Credentials' });
       }
 
-      // Return jsonwebtoken
       const payload = {
         user: {
           id: user.id
@@ -65,8 +58,10 @@ router.post(
 
       jwt.sign(
         payload,
-        process.env.JWT_SECRET,
-        { expiresIn: 360000 },
+        process.env.JWT_SECRET || 'mysecret',
+        {
+          expiresIn: '24h'
+        },
         (err, token) => {
           if (err) throw err;
           res.json({ token });

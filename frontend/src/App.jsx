@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { ProfileProvider } from './context/ProfileContext';
+import { PostsProvider } from './context/PostsContext';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from './components/layout/Navbar';
@@ -13,6 +14,10 @@ import ProfileDetail from './components/profile/ProfileDetail';
 import AddExperience from './components/profile/AddExperience';
 import AddEducation from './components/profile/AddEducation';
 import Profiles from './components/profiles/Profiles';
+import Posts from './components/posts/Posts';
+import PostDetail from './components/posts/PostDetail';
+import UserPosts from './components/posts/UserPosts';
+import Notifications from './components/notifications/Notifications';
 import './App.css';
 
 // Landing page component
@@ -52,98 +57,98 @@ const Landing = () => {
 const CreateProfile = () => <ProfileForm />;
 const EditProfile = () => <ProfileForm edit={true} />;
 
-const Posts = () => (
-  <div className="container py-20">
-    <div className="max-w-4xl mx-auto">
-      <h1 className="text-3xl font-bold mb-8">Posts</h1>
-      <div className="space-y-6">
-        {[1, 2, 3].map((i) => (
-          <div key={i} className="bg-white p-6 rounded-lg shadow">
-            <div className="flex items-center mb-4">
-              <div className="w-12 h-12 bg-gray-300 rounded-full mr-4"></div>
-              <div>
-                <h4 className="font-semibold">Developer {i}</h4>
-                <p className="text-gray-500 text-sm">2 hours ago</p>
-              </div>
-            </div>
-            <p className="text-gray-700 mb-4">
-              This is a sample post from developer {i}. Great discussion about React hooks!
-            </p>
-            <div className="flex space-x-4 text-gray-500">
-              <button className="hover:text-blue-500">👍 Like</button>
-              <button className="hover:text-blue-500">💬 Comment</button>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  </div>
-);
+
 
 function App() {
   return (
     <AuthProvider>
       <ProfileProvider>
-        <Router>
-          <div className="App">
-            <Navbar />
-            <Routes>
-              <Route path="/" element={<Landing />} />
-              <Route path="/register" element={<Register />} />
-              <Route path="/login" element={<Login />} />
-              <Route 
-                path="/dashboard" 
-                element={
-                  <ProtectedRoute>
-                    <Dashboard />
-                  </ProtectedRoute>
-                } 
-              />
-              <Route 
-                path="/create-profile" 
-                element={
-                  <ProtectedRoute>
-                    <CreateProfile />
-                  </ProtectedRoute>
-                } 
-              />
-              <Route 
-                path="/edit-profile" 
-                element={
-                  <ProtectedRoute>
-                    <EditProfile />
-                  </ProtectedRoute>
-                } 
-              />
-              <Route 
-                path="/add-experience" 
-                element={
-                  <ProtectedRoute>
-                    <AddExperience />
-                  </ProtectedRoute>
-                } 
-              />
-              <Route 
-                path="/add-education" 
-                element={
-                  <ProtectedRoute>
-                    <AddEducation />
-                  </ProtectedRoute>
-                } 
-              />
-              <Route path="/profiles" element={<Profiles />} />
-              <Route path="/profile/:id" element={<ProfileDetail />} />
-              <Route 
-                path="/posts" 
-                element={
-                  <ProtectedRoute>
-                    <Posts />
-                  </ProtectedRoute>
-                } 
-              />
-            </Routes>
-          </div>
-        </Router>
+        <PostsProvider>
+          <Router>
+            <div className="App">
+              <Navbar />
+              <Routes>
+                <Route path="/" element={<Landing />} />
+                <Route path="/register" element={<Register />} />
+                <Route path="/login" element={<Login />} />
+                <Route 
+                  path="/dashboard" 
+                  element={
+                    <ProtectedRoute>
+                      <Dashboard />
+                    </ProtectedRoute>
+                  } 
+                />
+                <Route 
+                  path="/create-profile" 
+                  element={
+                    <ProtectedRoute>
+                      <CreateProfile />
+                    </ProtectedRoute>
+                  } 
+                />
+                <Route 
+                  path="/edit-profile" 
+                  element={
+                    <ProtectedRoute>
+                      <EditProfile />
+                    </ProtectedRoute>
+                  } 
+                />
+                <Route 
+                  path="/add-experience" 
+                  element={
+                    <ProtectedRoute>
+                      <AddExperience />
+                    </ProtectedRoute>
+                  } 
+                />
+                <Route 
+                  path="/add-education" 
+                  element={
+                    <ProtectedRoute>
+                      <AddEducation />
+                    </ProtectedRoute>
+                  } 
+                />
+                <Route path="/profiles" element={<Profiles />} />
+                <Route path="/profile/:id" element={<ProfileDetail />} />
+                <Route 
+                  path="/posts" 
+                  element={
+                    <ProtectedRoute>
+                      <Posts />
+                    </ProtectedRoute>
+                  } 
+                />
+                <Route 
+                  path="/posts/:id" 
+                  element={
+                    <ProtectedRoute>
+                      <PostDetail />
+                    </ProtectedRoute>
+                  } 
+                />
+                <Route 
+                  path="/notifications" 
+                  element={
+                    <ProtectedRoute>
+                      <Notifications />
+                    </ProtectedRoute>
+                  } 
+                />
+                <Route 
+                  path="/user/:userId/posts" 
+                  element={
+                    <ProtectedRoute>
+                      <UserPosts />
+                    </ProtectedRoute>
+                  } 
+                />
+              </Routes>
+            </div>
+          </Router>
+        </PostsProvider>
       </ProfileProvider>
     </AuthProvider>
   );

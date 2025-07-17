@@ -16,6 +16,16 @@ const PostSchema = new Schema({
   avatar: {
     type: String
   },
+  image: {
+    type: String
+  },
+  category: {
+    type: String,
+    default: ''
+  },
+  tags: [{
+    type: String
+  }],
   likes: [
     {
       user: {
@@ -52,4 +62,4 @@ const PostSchema = new Schema({
   }
 });
 
-module.exports = Post = mongoose.model('post', PostSchema); 
+module.exports = mongoose.model('post', PostSchema); 
