@@ -32,6 +32,9 @@ app.use('/api/notifications', require('./routes/notifications'));
 
 // Socket.IO connection handler
 io.on('connection', (socket) => {
+    socket.on('join', (userId) => {
+        socket.join(userId);
+    });
   // You can add authentication here if needed
   // Listen for events if needed
   console.log('Socket connected:', socket.id);
