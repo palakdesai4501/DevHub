@@ -7,6 +7,7 @@ require("dotenv").config();
 const Profile = require("../models/Profile");
 const User = require("../models/User");
 const Post = require("../models/Post");
+const Notification = require('../models/Notification');
 
 // @route    GET api/profile/me
 // @desc     Get current user's profile
@@ -312,6 +313,78 @@ router.get("/github/:username", async (req, res) => {
     const repos = await gitHubResponse.json();
 
     res.json(repos);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
+});
+
+// @route    PUT api/profile/follow/:user_id
+// @desc     Follow a user
+// @access   Private
+router.put('/follow/:user_id', auth, async (req, res) => {
+  try {
+    const userToFollow = await User.findById(req.params.user_id);
+    const currentUser = await User.findById(req.user.id);
+    if (!userToFollow) {
+      return res.status(404).json({ msg: 'User not found' });
+    }
+    if (req.user.id === req.params.user_id) {
+      return res.status(400).json({ msg: 'You cannot follow yourself' });
+    }
+    // Add to following/followers arrays
+    const profileToFollow = await Profile.findOne({ user: req.params.user_id });
+    const currentProfile = await Profile.findOne({ user: req.user.id });
+    if (!profileToFollow.followers) profileToFollow.followers = [];
+    if (!currentProfile.following) currentProfile.following = [];
+    if (profileToFollow.followers.includes(req.user.id)) {
+      return res.status(400).json({ msg: 'Already following' });
+    }
+    profileToFollow.followers.unshift(req.user.id);
+    currentProfile.following.unshift(req.params.user_id);
+    await profileToFollow.save();
+    await currentProfile.save();
+    // Notification logic
+    const notification = await Notification.create({
+      user: req.params.user_id,
+      type: 'follow',
+      from: req.user.id,
+      message: `${currentUser.name} started following you`
+    });
+    const io = req.app.get('io');
+    io.to(req.params.user_id).emit('notification', notification);
+    res.json({ msg: 'User followed' });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
+});
+
+// @route    PUT api/profile/unfollow/:user_id
+// @desc     Unfollow a user
+// @access   Private
+router.put('/unfollow/:user_id', auth, async (req, res) => {
+  try {
+    const userToUnfollow = await User.findById(req.params.user_id);
+    if (!userToUnfollow) {
+      return res.status(404).json({ msg: 'User not found' });
+    }
+    if (req.user.id === req.params.user_id) {
+      return res.status(400).json({ msg: 'You cannot unfollow yourself' });
+    }
+    const profileToUnfollow = await Profile.findOne({ user: req.params.user_id });
+    const currentProfile = await Profile.findOne({ user: req.user.id });
+    if (!profileToUnfollow.followers) profileToUnfollow.followers = [];
+    if (!currentProfile.following) currentProfile.following = [];
+    profileToUnfollow.followers = profileToUnfollow.followers.filter(
+      (id) => id.toString() !== req.user.id
+    );
+    currentProfile.following = currentProfile.following.filter(
+      (id) => id.toString() !== req.params.user_id
+    );
+    await profileToUnfollow.save();
+    await currentProfile.save();
+    res.json({ msg: 'User unfollowed' });
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server Error');

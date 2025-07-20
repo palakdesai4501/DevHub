@@ -6,6 +6,7 @@ const upload = require("../middleware/upload");
 
 const Post = require("../models/Post");
 const User = require("../models/User");
+const Notification = require('../models/Notification');
 
 // @route    POST api/posts
 // @desc     Create a post
@@ -144,6 +145,20 @@ router.put("/like/:id", auth, async (req, res) => {
 
     await post.save();
 
+    // Notification logic
+    if (post.user.toString() !== req.user.id) {
+      const user = await User.findById(req.user.id);
+      const notification = await Notification.create({
+        user: post.user,
+        type: 'like',
+        from: req.user.id,
+        post: post._id,
+        message: `${user.name} liked your post`
+      });
+      // Emit real-time notification
+      const io = req.app.get('io');
+      io.to(post.user.toString()).emit('notification', notification);
+    }
     res.json(post.likes);
   } catch (err) {
     console.error(err.message);
@@ -204,6 +219,18 @@ router.post(
 
       await post.save();
 
+      // Notification logic
+      if (post.user.toString() !== req.user.id) {
+        const notification = await Notification.create({
+          user: post.user,
+          type: 'comment',
+          from: req.user.id,
+          post: post._id,
+          message: `${user.name} commented on your post`
+        });
+        const io = req.app.get('io');
+        io.to(post.user.toString()).emit('notification', notification);
+      }
       res.json(post.comments);
     } catch (err) {
       console.error(err.message);
