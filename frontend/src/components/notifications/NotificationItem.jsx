@@ -7,13 +7,10 @@ const NotificationItem = ({ notification, onMarkAsRead }) => {
     const date = new Date(dateString);
     const now = new Date();
     const diffInHours = Math.floor((now - date) / (1000 * 60 * 60));
-    
     if (diffInHours < 1) return 'Just now';
     if (diffInHours < 24) return `${diffInHours} hour${diffInHours > 1 ? 's' : ''} ago`;
-    
     const diffInDays = Math.floor(diffInHours / 24);
     if (diffInDays < 7) return `${diffInDays} day${diffInDays > 1 ? 's' : ''} ago`;
-    
     return date.toLocaleDateString();
   };
 
@@ -30,28 +27,14 @@ const NotificationItem = ({ notification, onMarkAsRead }) => {
     }
   };
 
-  const getNotificationText = (notification) => {
-    switch (notification.type) {
-      case 'like':
-        return `${notification.fromUser} liked your post`;
-      case 'comment':
-        return `${notification.fromUser} commented on your post`;
-      case 'follow':
-        return `${notification.fromUser} started following you`;
-      default:
-        return notification.message;
-    }
-  };
-
   const handleClick = () => {
     if (!notification.read) {
       onMarkAsRead(notification._id);
     }
-    
-    if (notification.postId) {
-      navigate(`/posts/${notification.postId}`);
-    } else if (notification.userId) {
-      navigate(`/profile/${notification.userId}`);
+    if (notification.post) {
+      navigate(`/posts/${notification.post}`);
+    } else if (notification.type === 'follow' && notification.from) {
+      navigate(`/profile/${notification.from}`);
     }
   };
 
@@ -68,7 +51,7 @@ const NotificationItem = ({ notification, onMarkAsRead }) => {
         <div className="text-2xl">{getNotificationIcon(notification.type)}</div>
         <div className="flex-1">
           <p className="text-gray-800 font-medium">
-            {getNotificationText(notification)}
+            {notification.message}
           </p>
           <p className="text-gray-500 text-sm mt-1">
             {formatDate(notification.createdAt)}

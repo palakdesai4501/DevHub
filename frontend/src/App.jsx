@@ -19,6 +19,7 @@ import PostDetail from './components/posts/PostDetail';
 import UserPosts from './components/posts/UserPosts';
 import Notifications from './components/notifications/Notifications';
 import './App.css';
+import { NotificationProvider } from './context/NotificationContext';
 
 // Landing page component
 const Landing = () => {
@@ -64,6 +65,7 @@ function App() {
     <AuthProvider>
       <ProfileProvider>
         <PostsProvider>
+          <NotificationProvider>
           <Router>
             <div className="App">
               <Navbar />
@@ -148,6 +150,7 @@ function App() {
               </Routes>
             </div>
           </Router>
+          </NotificationProvider>
         </PostsProvider>
       </ProfileProvider>
     </AuthProvider>
