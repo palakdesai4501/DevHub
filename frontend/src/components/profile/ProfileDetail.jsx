@@ -1,15 +1,42 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useProfile } from '../../context/ProfileContext';
 import FollowButton from './FollowButton';
+import axios from 'axios';
 
 const ProfileDetail = () => {
   const { id } = useParams();
   const { profile, loading, getProfileById } = useProfile();
+  const [repos, setRepos] = useState([]);
+  const [reposLoading, setReposLoading] = useState(false);
+  const [reposError, setReposError] = useState(null);
 
   useEffect(() => {
     getProfileById(id);
   }, [getProfileById, id]);
+
+  // Fetch GitHub repos if githubusername exists
+  useEffect(() => {
+    const fetchRepos = async () => {
+      if (profile?.githubusername) {
+        setReposLoading(true);
+        setReposError(null);
+        try {
+          const res = await axios.get(`/api/profile/github/${profile.githubusername}`, {
+            baseURL: import.meta.env.VITE_API_BASE_URL || 'http://localhost:5001',
+          });
+          setRepos(res.data);
+        } catch (err) {
+          setReposError('Could not fetch GitHub repositories.');
+        } finally {
+          setReposLoading(false);
+        }
+      } else {
+        setRepos([]);
+      }
+    };
+    fetchRepos();
+  }, [profile?.githubusername]);
 
   if (loading) {
     return (
@@ -269,11 +296,45 @@ const ProfileDetail = () => {
                   href={`https://github.com/${profile.githubusername}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center px-4 py-2 bg-gray-800 text-white rounded hover:bg-gray-900 transition-colors"
+                  className="inline-flex items-center px-4 py-2 bg-gray-800 text-white rounded hover:bg-gray-900 transition-colors mb-4"
                 >
                   <i className="fab fa-github mr-2"></i>
                   View GitHub Profile
                 </a>
+                {/* Repo List */}
+                {reposLoading ? (
+                  <div className="flex items-center space-x-2 mt-4">
+                    <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-blue-500"></div>
+                    <span className="text-gray-500">Loading repositories...</span>
+                  </div>
+                ) : reposError ? (
+                  <div className="text-red-500 mt-4">{reposError}</div>
+                ) : repos.length === 0 ? (
+                  <div className="text-gray-500 mt-4">No public repositories found.</div>
+                ) : (
+                  <ul className="divide-y divide-gray-200 mt-4">
+                    {repos.map((repo) => (
+                      <li key={repo.id} className="py-4">
+                        <a
+                          href={repo.html_url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-blue-700 font-semibold hover:underline text-lg"
+                        >
+                          {repo.name}
+                        </a>
+                        {repo.description && (
+                          <p className="text-gray-700 mt-1">{repo.description}</p>
+                        )}
+                        <div className="flex items-center space-x-4 mt-2 text-sm text-gray-500">
+                          <span><i className="fas fa-star mr-1"></i>{repo.stargazers_count} stars</span>
+                          {repo.language && <span><i className="fas fa-code mr-1"></i>{repo.language}</span>}
+                          <span><i className="fas fa-code-branch mr-1"></i>{repo.forks_count} forks</span>
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </div>
             )}
           </div>
