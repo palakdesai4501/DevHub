@@ -31,7 +31,7 @@ const Profiles = () => {
         {profiles.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {profiles.map((profile) => (
-              <div key={profile._id} className="bg-white p-6 rounded-lg shadow hover:shadow-lg transition-shadow">
+              <div key={profile._id} className="bg-white p-6 rounded-lg shadow hover:shadow-lg transition-shadow card-animate">
                 <div className="text-center">
                   {/* Avatar placeholder */}
                   <div className="w-20 h-20 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full mx-auto mb-4 flex items-center justify-center">

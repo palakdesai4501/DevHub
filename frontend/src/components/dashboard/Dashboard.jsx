@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { useProfile } from '../../context/ProfileContext';
+import toast from 'react-hot-toast';
 
 const Dashboard = () => {
   const { user } = useAuth();
@@ -10,6 +11,35 @@ const Dashboard = () => {
   useEffect(() => {
     getCurrentProfile();
   }, [getCurrentProfile]);
+
+  const handleDeleteExperience = async (id) => {
+    try {
+      await deleteExperience(id);
+      toast.success('Experience deleted!');
+    } catch {
+      toast.error('Failed to delete experience.');
+    }
+  };
+
+  const handleDeleteEducation = async (id) => {
+    try {
+      await deleteEducation(id);
+      toast.success('Education deleted!');
+    } catch {
+      toast.error('Failed to delete education.');
+    }
+  };
+
+  const handleDeleteAccount = async () => {
+    if (window.confirm('Are you sure you want to delete your account? This cannot be undone.')) {
+      try {
+        await deleteAccount();
+        toast.success('Account deleted!');
+      } catch {
+        toast.error('Failed to delete account.');
+      }
+    }
+  };
 
   if (loading) {
     return (
@@ -40,26 +70,26 @@ const Dashboard = () => {
           // User has a profile
           <div className="space-y-8">
             {/* Profile Actions */}
-            <div className="bg-white p-6 rounded-lg shadow">
+            <div className="bg-white p-6 rounded-lg shadow card-animate">
               <h2 className="text-xl font-semibold mb-4">Profile Actions</h2>
               <div className="flex flex-wrap gap-4">
                 <Link 
                   to="/edit-profile" 
-                  className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors"
+                  className="px-4 py-2 btn text-white rounded hover:bg-blue-700 transition-colors"
                 >
                   <i className="fas fa-user-circle mr-2"></i>
                   Edit Profile
                 </Link>
                 <Link 
                   to="/add-experience" 
-                  className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition-colors"
+                  className="px-4 py-2 btn text-white rounded hover:bg-green-700 transition-colors"
                 >
                   <i className="fas fa-briefcase mr-2"></i>
                   Add Experience
                 </Link>
                 <Link 
                   to="/add-education" 
-                  className="px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-700 transition-colors"
+                  className="px-4 py-2 btn text-white rounded hover:bg-purple-700 transition-colors"
                 >
                   <i className="fas fa-graduation-cap mr-2"></i>
                   Add Education
@@ -68,7 +98,7 @@ const Dashboard = () => {
             </div>
 
             {/* Profile Summary */}
-            <div className="bg-white p-6 rounded-lg shadow">
+            <div className="bg-white p-6 rounded-lg shadow card-animate">
               <h2 className="text-xl font-semibold mb-4">Profile Summary</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
@@ -105,7 +135,7 @@ const Dashboard = () => {
 
             {/* Experience */}
             {profile.experience && profile.experience.length > 0 && (
-              <div className="bg-white p-6 rounded-lg shadow">
+              <div className="bg-white p-6 rounded-lg shadow card-animate">
                 <h2 className="text-xl font-semibold mb-4">Experience</h2>
                 <div className="space-y-4">
                   {profile.experience.map((exp) => (
@@ -120,7 +150,7 @@ const Dashboard = () => {
                           {exp.description && <p className="text-gray-700 mt-2">{exp.description}</p>}
                         </div>
                         <button 
-                          onClick={() => deleteExperience(exp._id)}
+                          onClick={() => handleDeleteExperience(exp._id)}
                           className="text-red-600 hover:text-red-800"
                           title="Delete Experience"
                         >
@@ -135,7 +165,7 @@ const Dashboard = () => {
 
             {/* Education */}
             {profile.education && profile.education.length > 0 && (
-              <div className="bg-white p-6 rounded-lg shadow">
+              <div className="bg-white p-6 rounded-lg shadow card-animate">
                 <h2 className="text-xl font-semibold mb-4">Education</h2>
                 <div className="space-y-4">
                   {profile.education.map((edu) => (
@@ -150,7 +180,7 @@ const Dashboard = () => {
                           {edu.description && <p className="text-gray-700 mt-2">{edu.description}</p>}
                         </div>
                         <button 
-                          onClick={() => deleteEducation(edu._id)}
+                          onClick={() => handleDeleteEducation(edu._id)}
                           className="text-red-600 hover:text-red-800"
                           title="Delete Education"
                         >
@@ -164,13 +194,13 @@ const Dashboard = () => {
             )}
 
             {/* Danger Zone */}
-            <div className="bg-red-50 border border-red-200 p-6 rounded-lg">
+            <div className="bg-red-50 border border-red-200 p-6 rounded-lg card-animate">
               <h2 className="text-xl font-semibold text-red-800 mb-4">Danger Zone</h2>
               <p className="text-red-600 mb-4">
                 Delete your account and profile. This action cannot be undone.
               </p>
               <button 
-                onClick={deleteAccount}
+                onClick={handleDeleteAccount}
                 className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition-colors"
               >
                 <i className="fas fa-user-minus mr-2"></i>
@@ -180,7 +210,7 @@ const Dashboard = () => {
           </div>
         ) : (
           // User doesn't have a profile yet
-          <div className="bg-blue-50 border border-blue-200 p-6 rounded-lg text-center">
+          <div className="bg-blue-50 border border-blue-200 p-6 rounded-lg text-center card-animate">
             <i className="fas fa-user text-blue-600 text-4xl mb-4"></i>
             <h2 className="text-xl font-semibold text-blue-800 mb-4">
               You have not yet set up a profile

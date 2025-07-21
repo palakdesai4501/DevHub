@@ -40,7 +40,7 @@ const NotificationItem = ({ notification, onMarkAsRead }) => {
 
   return (
     <div 
-      className={`p-4 border-l-4 cursor-pointer transition-colors ${
+      className={`p-4 border-l-4 cursor-pointer transition-colors card-animate ${
         notification.read 
           ? 'bg-gray-50 border-gray-200' 
           : 'bg-blue-50 border-blue-500'

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { usePosts } from '../../context/PostsContext';
+import toast from 'react-hot-toast';
 
 const CommentForm = ({ postId }) => {
   const [text, setText] = useState('');
@@ -12,13 +13,14 @@ const CommentForm = ({ postId }) => {
     try {
       await addComment(postId, { text });
       setText('');
+      toast.success('Comment added!');
     } catch (err) {
-      // Error is handled in context
+      toast.error('Failed to add comment. Please try again.');
     }
   };
 
   return (
-    <div className="bg-gray-50 p-4 rounded-lg mb-4">
+    <div className="bg-gray-50 p-4 rounded-lg mb-4 card-animate">
       <h3 className="text-lg font-semibold mb-3">Add a Comment</h3>
       <form onSubmit={handleSubmit}>
         <textarea

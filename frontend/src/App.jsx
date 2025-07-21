@@ -20,6 +20,7 @@ import UserPosts from './components/posts/UserPosts';
 import Notifications from './components/notifications/Notifications';
 import './App.css';
 import { NotificationProvider } from './context/NotificationContext';
+import { Toaster } from 'react-hot-toast';
 
 // Landing page component
 const Landing = () => {
@@ -68,6 +69,11 @@ function App() {
           <NotificationProvider>
           <Router>
             <div className="App">
+              <Toaster position="top-right" toastOptions={{
+                style: { borderRadius: '0.75rem', background: 'var(--color-white)', color: 'var(--color-primary)', boxShadow: '0 2px 16px var(--color-shadow)' },
+                success: { background: 'var(--color-secondary)', color: 'var(--color-white)' },
+                error: { background: '#ef4444', color: 'var(--color-white)' },
+              }} />
               <Navbar />
               <Routes>
                 <Route path="/" element={<Landing />} />

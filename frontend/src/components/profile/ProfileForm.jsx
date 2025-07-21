@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useProfile } from '../../context/ProfileContext';
+import toast from 'react-hot-toast';
 
 const ProfileForm = ({ edit = false }) => {
   const navigate = useNavigate();
@@ -91,6 +92,7 @@ const ProfileForm = ({ edit = false }) => {
 
     try {
       await createProfile(formData);
+      toast.success(edit ? 'Profile updated!' : 'Profile created!');
       navigate('/dashboard');
     } catch (error) {
       // Handle API errors
@@ -102,6 +104,7 @@ const ProfileForm = ({ edit = false }) => {
         setErrors(apiErrors);
       } else {
         setErrors({ general: 'An error occurred. Please try again.' });
+        toast.error('Failed to save profile.');
       }
     }
   };
@@ -120,7 +123,7 @@ const ProfileForm = ({ edit = false }) => {
           </strong>
         </div>
 
-        <form onSubmit={onSubmit} className="bg-white p-8 rounded-lg shadow">
+        <form onSubmit={onSubmit} className="bg-white p-8 rounded-lg shadow card-animate">
           {errors.general && (
             <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded mb-6">
               {errors.general}

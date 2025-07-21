@@ -1,5 +1,6 @@
 import { useState, useRef } from 'react';
 import { usePosts } from '../../context/PostsContext';
+import toast from 'react-hot-toast';
 
 const PostForm = () => {
   const [text, setText] = useState('');
@@ -110,15 +111,16 @@ const PostForm = () => {
       if (fileInputRef.current) {
         fileInputRef.current.value = '';
       }
+      toast.success('Post created successfully!');
     } catch (err) {
-      // Error is handled in context
+      toast.error('Failed to create post. Please try again.');
     } finally {
       setUploading(false);
     }
   };
 
   return (
-    <div className="bg-white p-6 rounded-lg shadow mb-6">
+    <div className="bg-white p-6 rounded-lg shadow mb-6 card-animate">
       <h3 className="text-xl font-semibold mb-4">Create a Post</h3>
       <form onSubmit={handleSubmit}>
         <textarea
