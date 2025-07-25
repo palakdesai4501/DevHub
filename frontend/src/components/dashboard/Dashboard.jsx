@@ -108,7 +108,7 @@ const Dashboard = () => {
                   {profile.website && (
                     <p className="text-gray-600 mb-2">
                       <strong>Website:</strong> 
-                      <a href={profile.website} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 ml-1">
+                      <a href={profile.website} target="_blank" rel="noopener noreferrer" className="ml-1" style={{ color: 'var(--color-primary)' }}>
                         {profile.website}
                       </a>
                     </p>
@@ -139,7 +139,7 @@ const Dashboard = () => {
                 <h2 className="text-xl font-semibold mb-4">Experience</h2>
                 <div className="space-y-4">
                   {profile.experience.map((exp) => (
-                    <div key={exp._id} className="border-l-4 border-blue-500 pl-4">
+                    <div key={exp._id} className="border-l-4 pl-4" style={{ borderColor: 'var(--color-primary)' }}>
                       <div className="flex justify-between items-start">
                         <div>
                           <h3 className="font-semibold text-gray-900">{exp.title}</h3>
@@ -169,7 +169,7 @@ const Dashboard = () => {
                 <h2 className="text-xl font-semibold mb-4">Education</h2>
                 <div className="space-y-4">
                   {profile.education.map((edu) => (
-                    <div key={edu._id} className="border-l-4 border-green-500 pl-4">
+                    <div key={edu._id} className="border-l-4 pl-4" style={{ borderColor: 'var(--color-primary)' }}>
                       <div className="flex justify-between items-start">
                         <div>
                           <h3 className="font-semibold text-gray-900">{edu.school}</h3>

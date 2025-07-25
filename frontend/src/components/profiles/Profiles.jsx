@@ -80,7 +80,7 @@ const Profiles = () => {
                   {/* View Profile Button */}
                   <Link 
                     to={`/profile/${profile.user._id}`} 
-                    className="inline-block w-full px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors"
+                    className="inline-block w-full px-4 py-2 text-white rounded hover:bg-blue-700 transition-colors" style={{ background: 'var(--color-primary)' }}
                   >
                     View Profile
                   </Link>

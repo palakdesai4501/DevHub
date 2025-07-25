@@ -40,7 +40,7 @@ const Landing = () => {
           Developer Connector
         </h1>
         <p className="text-xl md:text-2xl mb-8 max-w-2xl mx-auto">
-          Create a developer profile/portfolio, share posts and get help from other developers
+          Create a developer profile, share posts and get help from other developers
         </p>
         <div className="space-x-4">
           <Link to="/register" className="btn btn-primary text-lg px-8 py-3">
