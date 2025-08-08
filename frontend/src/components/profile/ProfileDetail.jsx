@@ -42,7 +42,7 @@ const ProfileDetail = () => {
     return (
       <div className="container py-20">
         <div className="text-center">
-          <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+          <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-[#819A91]"></div>
           <p className="mt-4">Loading profile...</p>
         </div>
       </div>
@@ -53,9 +53,9 @@ const ProfileDetail = () => {
     return (
       <div className="container py-20">
         <div className="text-center">
-          <i className="fas fa-user-slash text-gray-400 text-6xl mb-4"></i>
+          <i className="fas fa-user-slash text-[#819A91] text-6xl mb-4"></i>
           <h2 className="text-2xl font-semibold text-gray-600 mb-4">Profile Not Found</h2>
-          <Link to="/profiles" className="text-blue-600 hover:text-blue-800">
+          <Link to="/profiles" className="text-[#819A91] hover:text-[#819A91]">
             ← Back to Profiles
           </Link>
         </div>
@@ -76,10 +76,10 @@ const ProfileDetail = () => {
         </Link>
 
         {/* Profile Header */}
-        <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white p-8 rounded-lg mb-8">
+        <div className="bg-gradient-to-r from-[#819A91] to-[#819A91] text-white p-8 rounded-lg mb-8">
           <div className="flex flex-col md:flex-row items-center">
             {/* Avatar */}
-            <div className="w-32 h-32 bg-white bg-opacity-20 rounded-full flex items-center justify-center mb-4 md:mb-0 md:mr-8">
+            <div className="w-32 h-32 bg-[#c0d8d0] bg-opacity-20 rounded-full flex items-center justify-center mb-4 md:mb-0 md:mr-8">
               <span className="text-4xl font-bold">
                 {profile.user.name.charAt(0).toUpperCase()}
               </span>
@@ -157,7 +157,7 @@ const ProfileDetail = () => {
             {profile.bio && (
               <div className="bg-white p-6 rounded-lg shadow">
                 <h3 className="text-xl font-semibold mb-4 text-gray-900">
-                  <i className="fas fa-user mr-2 text-blue-600"></i>
+                  <i className="fas fa-user mr-2 text-[#819A91]"></i>
                   About
                 </h3>
                 <p className="text-gray-700 leading-relaxed">{profile.bio}</p>
@@ -167,7 +167,7 @@ const ProfileDetail = () => {
             {/* Skills */}
             <div className="bg-white p-6 rounded-lg shadow">
               <h3 className="text-xl font-semibold mb-4 text-gray-900">
-                <i className="fas fa-code mr-2 text-blue-600"></i>
+                <i className="fas fa-code mr-2 text-[#819A91]"></i>
                 Skills
               </h3>
               <div className="flex flex-wrap gap-2">
@@ -189,7 +189,7 @@ const ProfileDetail = () => {
             {profile.experience && profile.experience.length > 0 && (
               <div className="bg-white p-6 rounded-lg shadow">
                 <h3 className="text-xl font-semibold mb-6 text-gray-900">
-                  <i className="fas fa-briefcase mr-2 text-blue-600"></i>
+                  <i className="fas fa-briefcase mr-2 text-[#819A91]"></i>
                   Experience
                 </h3>
                 <div className="space-y-6">
@@ -202,14 +202,14 @@ const ProfileDetail = () => {
                       
                       <div className="flex">
                         {/* Timeline dot */}
-                        <div className="flex-shrink-0 w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center mr-4">
+                        <div className="flex-shrink-0 w-8 h-8 bg-[#819A91] rounded-full flex items-center justify-center mr-4">
                           <i className="fas fa-briefcase text-white text-sm"></i>
                         </div>
                         
                         {/* Content */}
                         <div className="flex-1">
                           <h4 className="text-lg font-semibold text-gray-900">{exp.title}</h4>
-                          <p className="text-blue-600 font-medium">{exp.company}</p>
+                          <p className="text-green-600 font-medium">{exp.company}</p>
                           <p className="text-gray-500 text-sm mb-2">
                             {new Date(exp.from).toLocaleDateString('en-US', { 
                               year: 'numeric', 
@@ -221,7 +221,7 @@ const ProfileDetail = () => {
                           </p>
                           {exp.location && (
                             <p className="text-gray-500 text-sm mb-2">
-                              <i className="fas fa-map-marker-alt mr-1"></i>
+                              <i className="fas fa-map-marker-alt mr-1 text-[#819A91]"></i>
                               {exp.location}
                             </p>
                           )}
@@ -240,7 +240,7 @@ const ProfileDetail = () => {
             {profile.education && profile.education.length > 0 && (
               <div className="bg-white p-6 rounded-lg shadow">
                 <h3 className="text-xl font-semibold mb-6 text-gray-900">
-                  <i className="fas fa-graduation-cap mr-2 text-blue-600"></i>
+                  <i className="fas fa-graduation-cap mr-2 text-[#819A91]"></i>
                   Education
                 </h3>
                 <div className="space-y-6">
@@ -253,7 +253,7 @@ const ProfileDetail = () => {
                       
                       <div className="flex">
                         {/* Timeline dot */}
-                        <div className="flex-shrink-0 w-8 h-8 bg-green-600 rounded-full flex items-center justify-center mr-4">
+                        <div className="flex-shrink-0 w-8 h-8 bg-[#819A91] rounded-full flex items-center justify-center mr-4">
                           <i className="fas fa-graduation-cap text-white text-sm"></i>
                         </div>
                         
@@ -286,7 +286,7 @@ const ProfileDetail = () => {
             {profile.githubusername && (
               <div className="bg-white p-6 rounded-lg shadow">
                 <h3 className="text-xl font-semibold mb-4 text-gray-900">
-                  <i className="fab fa-github mr-2 text-gray-800"></i>
+                  <i className="fab fa-github mr-2 text-[#819A91]"></i>
                   GitHub Repositories
                 </h3>
                 <p className="text-gray-600 mb-4">
@@ -304,7 +304,7 @@ const ProfileDetail = () => {
                 {/* Repo List */}
                 {reposLoading ? (
                   <div className="flex items-center space-x-2 mt-4">
-                    <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-blue-500"></div>
+                    <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-[#819A91]"></div>
                     <span className="text-gray-500">Loading repositories...</span>
                   </div>
                 ) : reposError ? (

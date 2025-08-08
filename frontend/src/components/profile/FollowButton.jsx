@@ -56,7 +56,7 @@ const FollowButton = ({ userId, userName, initialFollowers = 0 }) => {
   }
 
   return (
-    <div className="flex items-center space-x-3 card-animate">
+    <div className="flex items-center space-x-3 card-animate space-y-2">
       <button
         onClick={handleFollow}
         disabled={loading}
@@ -75,7 +75,7 @@ const FollowButton = ({ userId, userName, initialFollowers = 0 }) => {
           <span>{isFollowing ? 'Following' : 'Follow'}</span>
         )}
       </button>
-      <span className="text-sm text-gray-500">
+      <span className="text-sm text-white-500">
         {followersCount} {followersCount === 1 ? 'follower' : 'followers'}
       </span>
     </div>
