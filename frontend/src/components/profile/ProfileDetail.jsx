@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useProfile } from '../../context/ProfileContext';
 import FollowButton from './FollowButton';
-import axios from 'axios';
+import api from '../../utils/api';
 
 const ProfileDetail = () => {
   const { id } = useParams();
@@ -22,9 +22,12 @@ const ProfileDetail = () => {
         setReposLoading(true);
         setReposError(null);
         try {
-          const res = await axios.get(`/api/profile/github/${profile.githubusername}`, {
-            baseURL: import.meta.env.VITE_API_BASE_URL || 'http://localhost:5001',
-          });
+          const username = profile.githubusername?.split('/').filter(Boolean).pop();
+          if (!username) {
+            setRepos([]);
+            return;
+          }
+          const res = await api.get(`/profile/github/${username}`);
           setRepos(res.data);
         } catch (err) {
           setReposError('Could not fetch GitHub repositories.');
@@ -293,7 +296,7 @@ const ProfileDetail = () => {
                   Check out {profile.user.name}'s latest repositories on GitHub
                 </p>
                 <a 
-                  href={`https://github.com/${profile.githubusername}`}
+                  href={`https://github.com/${profile.githubusername?.split('/').filter(Boolean).pop()}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center px-4 py-2 bg-gray-800 text-white rounded hover:bg-gray-900 transition-colors mb-4"
