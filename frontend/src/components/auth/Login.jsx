@@ -85,7 +85,7 @@ const Login = () => {
                     <ul className="list-disc ml-4">
                       <li>Check your email and password</li>
                       <li>Make sure you have registered this account</li>
-                      <li><Link to="/register" className="underline text-blue-600">Create a new account</Link></li>
+                      <li><Link to="/register" className="underline" style={{ color: 'var(--color-primary)' }}>Create a new account</Link></li>
                     </ul>
                   </div>
                 )}
@@ -105,9 +105,10 @@ const Login = () => {
                   required
                   value={email}
                   onChange={onChange}
-                  className={`appearance-none block w-full px-3 py-2 border rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm ${
+                  className={`appearance-none block w-full px-3 py-2 border rounded-md shadow-sm placeholder-gray-400 focus:outline-none sm:text-sm ${
                     errors.email ? 'border-red-300' : 'border-gray-300'
                   }`}
+                  style={{ borderColor: 'var(--color-accent)' }}
                   placeholder="Enter your email"
                 />
                 {errors.email && (
@@ -129,9 +130,10 @@ const Login = () => {
                   required
                   value={password}
                   onChange={onChange}
-                  className={`appearance-none block w-full px-3 py-2 border rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm ${
+                  className={`appearance-none block w-full px-3 py-2 border rounded-md shadow-sm placeholder-gray-400 focus:outline-none sm:text-sm ${
                     errors.password ? 'border-red-300' : 'border-gray-300'
                   }`}
+                  style={{ borderColor: 'var(--color-accent)' }}
                   placeholder="Enter your password"
                 />
                 {errors.password && (
@@ -146,7 +148,8 @@ const Login = () => {
                   id="remember-me"
                   name="remember-me"
                   type="checkbox"
-                  className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                  className="h-4 w-4 border-gray-300 rounded"
+                  style={{ accentColor: 'var(--color-primary)' }}
                 />
                 <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-900">
                   Remember me
@@ -154,7 +157,7 @@ const Login = () => {
               </div>
 
               <div className="text-sm">
-                <a href="#" className="font-medium text-blue-800 hover:text-blue-800">
+                <a href="#" className="font-medium" style={{ color: 'var(--color-primary)' }}>
                   Forgot your password?
                 </a>
               </div>
@@ -166,8 +169,8 @@ const Login = () => {
                 disabled={loading}
                 className={`w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white ${
                   loading 
-                    ? 'bg-gray-400 cursor-not-allowed' 
-                    : 'btn cursor-pointer focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500'
+                    ? 'cursor-not-allowed' 
+                    : 'btn cursor-pointer focus:outline-none focus:ring-2 focus:ring-offset-2'
                 }`}
               >
                 {loading ? (

@@ -37,8 +37,8 @@ const PostAnalytics = ({ post }) => {
       
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {/* Views */}
-        <div className="text-center p-3 bg-blue-50 rounded-lg">
-          <div className="text-2xl font-bold text-blue-600">
+        <div className="text-center p-3 rounded-lg" style={{ background: 'var(--color-accent)' }}>
+          <div className="text-2xl font-bold" style={{ color: 'var(--color-primary)' }}>
             {formatNumber(analytics.views)}
           </div>
           <div className="text-sm text-gray-600">Views</div>
@@ -53,16 +53,16 @@ const PostAnalytics = ({ post }) => {
         </div>
 
         {/* Comments */}
-        <div className="text-center p-3 bg-green-50 rounded-lg">
-          <div className="text-2xl font-bold text-green-600">
+        <div className="text-center p-3 rounded-lg" style={{ background: 'var(--color-accent)' }}>
+          <div className="text-2xl font-bold" style={{ color: 'var(--color-primary)' }}>
             {formatNumber(analytics.comments)}
           </div>
           <div className="text-sm text-gray-600">Comments</div>
         </div>
 
         {/* Shares */}
-        <div className="text-center p-3 bg-purple-50 rounded-lg">
-          <div className="text-2xl font-bold text-purple-600">
+        <div className="text-center p-3 rounded-lg" style={{ background: 'var(--color-accent)' }}>
+          <div className="text-2xl font-bold" style={{ color: 'var(--color-primary)' }}>
             {formatNumber(analytics.shares)}
           </div>
           <div className="text-sm text-gray-600">Shares</div>
@@ -77,8 +77,8 @@ const PostAnalytics = ({ post }) => {
         </div>
         <div className="w-full bg-gray-200 rounded-full h-2 mt-2">
           <div 
-            className="bg-blue-600 h-2 rounded-full transition-all duration-300"
-            style={{ width: `${Math.min(analytics.engagementRate, 100)}%` }}
+            className="h-2 rounded-full transition-all duration-300"
+            style={{ width: `${Math.min(analytics.engagementRate, 100)}%`, background: 'var(--color-primary)' }}
           ></div>
         </div>
       </div>
@@ -88,19 +88,19 @@ const PostAnalytics = ({ post }) => {
         <h5 className="text-sm font-semibold text-gray-700 mb-2">Performance Insights</h5>
         <div className="space-y-2 text-sm">
           {analytics.engagementRate > 5 && (
-            <div className="flex items-center text-green-600">
+            <div className="flex items-center" style={{ color: 'var(--color-primary)' }}>
               <i className="fas fa-arrow-up mr-2"></i>
               <span>High engagement! Your post is performing well.</span>
             </div>
           )}
           {analytics.views > 500 && (
-            <div className="flex items-center text-blue-600">
+            <div className="flex items-center" style={{ color: 'var(--color-primary)' }}>
               <i className="fas fa-eye mr-2"></i>
               <span>Great reach! Your post has been seen by many users.</span>
             </div>
           )}
           {analytics.comments > 10 && (
-            <div className="flex items-center text-purple-600">
+            <div className="flex items-center" style={{ color: 'var(--color-primary)' }}>
               <i className="fas fa-comments mr-2"></i>
               <span>Active discussion! Users are engaging with your content.</span>
             </div>

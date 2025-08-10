@@ -86,7 +86,8 @@ const Navbar = () => {
               <span className="font-semibold text-gray-700">Notifications</span>
               <Link
                 to="/notifications"
-                className="text-blue-500 hover:underline text-sm"
+                className="text-sm"
+                style={{ color: 'var(--color-primary)' }}
                 onClick={() => setDropdownOpen(false)}
               >
                 View all
@@ -99,7 +100,8 @@ const Navbar = () => {
                 notifications.slice(0, 6).map((notification) => (
                   <button
                     key={notification._id}
-                    className={`w-full text-left px-4 py-3 hover:bg-gray-50 focus:outline-none ${!notification.read ? 'bg-blue-50' : ''}`}
+                    className={`w-full text-left px-4 py-3 hover:bg-gray-50 focus:outline-none ${!notification.read ? '' : ''}`}
+                    style={!notification.read ? { background: 'var(--color-accent)' } : undefined}
                     onClick={() => handleNotificationClick(notification)}
                   >
                     <div className="flex items-start space-x-2">
@@ -117,7 +119,7 @@ const Navbar = () => {
                           {new Date(notification.createdAt).toLocaleString()}
                         </div>
                       </div>
-                      {!notification.read && <span className="w-2 h-2 bg-blue-500 rounded-full mt-2"></span>}
+                      {!notification.read && <span className="w-2 h-2 rounded-full mt-2" style={{ background: 'var(--color-primary)' }}></span>}
                     </div>
                   </button>
                 ))

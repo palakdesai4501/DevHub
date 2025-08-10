@@ -13,7 +13,7 @@ const Profiles = () => {
     return (
       <div className="container py-20">
         <div className="text-center">
-          <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+          <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2" style={{ borderBottomColor: 'var(--color-primary)' }}></div>
           <p className="mt-4">Loading developer profiles...</p>
         </div>
       </div>
@@ -34,7 +34,7 @@ const Profiles = () => {
               <div key={profile._id} className="bg-white p-6 rounded-lg shadow hover:shadow-lg transition-shadow card-animate">
                 <div className="text-center">
                   {/* Avatar placeholder */}
-                  <div className="w-20 h-20 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full mx-auto mb-4 flex items-center justify-center">
+                  <div className="w-20 h-20 bg-gradient-to-r rounded-full mx-auto mb-4 flex items-center justify-center">
                     <span className="text-white text-xl font-bold">
                       {profile.user.name.charAt(0).toUpperCase()}
                     </span>
@@ -65,7 +65,8 @@ const Profiles = () => {
                     {profile.skills.slice(0, 4).map((skill, index) => (
                       <span 
                         key={index} 
-                        className="bg-blue-100 text-blue-800 px-2 py-1 rounded text-sm"
+                        className="px-2 py-1 rounded text-sm"
+                        style={{ background: 'var(--color-accent)', color: 'var(--color-primary)' }}
                       >
                         {skill}
                       </span>
@@ -80,7 +81,8 @@ const Profiles = () => {
                   {/* View Profile Button */}
                   <Link 
                     to={`/profile/${profile.user._id}`} 
-                    className="inline-block w-full px-4 py-2 text-white rounded hover:bg-blue-700 transition-colors" style={{ background: 'var(--color-primary)' }}
+                    className="inline-block w-full px-4 py-2 text-white rounded transition-colors"
+                    style={{ background: 'var(--color-primary)' }}
                   >
                     View Profile
                   </Link>

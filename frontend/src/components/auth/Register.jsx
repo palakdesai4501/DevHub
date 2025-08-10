@@ -116,9 +116,10 @@ const Register = () => {
                   required
                   value={name}
                   onChange={onChange}
-                  className={`appearance-none block w-full px-3 py-2 border rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm ${
+                  className={`appearance-none block w-full px-3 py-2 border rounded-md shadow-sm placeholder-gray-400 focus:outline-none sm:text-sm ${
                     errors.name ? 'border-red-300' : 'border-gray-300'
                   }`}
+                  style={{ borderColor: 'var(--color-accent)' }}
                   placeholder="Enter your full name"
                 />
                 {errors.name && (
@@ -140,9 +141,10 @@ const Register = () => {
                   required
                   value={email}
                   onChange={onChange}
-                  className={`appearance-none block w-full px-3 py-2 border rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm ${
+                  className={`appearance-none block w-full px-3 py-2 border rounded-md shadow-sm placeholder-gray-400 focus:outline-none sm:text-sm ${
                     errors.email ? 'border-red-300' : 'border-gray-300'
                   }`}
+                  style={{ borderColor: 'var(--color-accent)' }}
                   placeholder="Enter your email"
                 />
                 {errors.email && (
@@ -164,9 +166,10 @@ const Register = () => {
                   required
                   value={password}
                   onChange={onChange}
-                  className={`appearance-none block w-full px-3 py-2 border rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm ${
+                  className={`appearance-none block w-full px-3 py-2 border rounded-md shadow-sm placeholder-gray-400 focus:outline-none sm:text-sm ${
                     errors.password ? 'border-red-300' : 'border-gray-300'
                   }`}
+                  style={{ borderColor: 'var(--color-accent)' }}
                   placeholder="Enter your password (min 6 characters)"
                 />
                 {errors.password && (
@@ -188,9 +191,10 @@ const Register = () => {
                   required
                   value={password2}
                   onChange={onChange}
-                  className={`appearance-none block w-full px-3 py-2 border rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm ${
+                  className={`appearance-none block w-full px-3 py-2 border rounded-md shadow-sm placeholder-gray-400 focus:outline-none sm:text-sm ${
                     errors.password2 ? 'border-red-300' : 'border-gray-300'
                   }`}
+                  style={{ borderColor: 'var(--color-accent)' }}
                   placeholder="Confirm your password"
                 />
                 {errors.password2 && (
@@ -203,9 +207,9 @@ const Register = () => {
               <button
                 type="submit"
                 disabled={loading}
-                className={`w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white ${
+                  className={`w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white ${
                   loading 
-                    ? 'bg-gray-400 cursor-not-allowed' 
+                    ? 'cursor-not-allowed' 
                     : 'btn focus:outline-none focus:ring-2 focus:ring-offset-2 cursor-pointer'
                 }`}
               >

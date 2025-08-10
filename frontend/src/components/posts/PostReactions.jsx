@@ -6,12 +6,12 @@ const PostReactions = ({ post, onReaction }) => {
   const [showReactions, setShowReactions] = useState(false);
 
   const reactions = [
-    { type: 'like', emoji: '👍', label: 'Like', color: 'text-blue-500' },
-    { type: 'love', emoji: '❤️', label: 'Love', color: 'text-red-500' },
-    { type: 'laugh', emoji: '😂', label: 'Haha', color: 'text-yellow-500' },
-    { type: 'wow', emoji: '😮', label: 'Wow', color: 'text-purple-500' },
-    { type: 'sad', emoji: '😢', label: 'Sad', color: 'text-blue-400' },
-    { type: 'angry', emoji: '😠', label: 'Angry', color: 'text-red-600' }
+    { type: 'like', emoji: '👍', label: 'Like' },
+    { type: 'love', emoji: '❤️', label: 'Love' },
+    { type: 'laugh', emoji: '😂', label: 'Haha' },
+    { type: 'wow', emoji: '😮', label: 'Wow' },
+    { type: 'sad', emoji: '😢', label: 'Sad' },
+    { type: 'angry', emoji: '😠', label: 'Angry' }
   ];
 
   const getUserReaction = () => {
@@ -44,9 +44,8 @@ const PostReactions = ({ post, onReaction }) => {
       {/* Reaction Button */}
       <button
         onClick={() => setShowReactions(!showReactions)}
-        className={`flex items-center space-x-1 transition-colors ${
-          currentReaction ? 'text-blue-500' : 'text-gray-500 hover:text-blue-500'
-        }`}
+        className={`flex items-center space-x-1 transition-colors`}
+        style={{ color: currentReaction ? 'var(--color-primary)' : undefined }}
         title="React to this post"
       >
         {currentReaction ? (
@@ -67,9 +66,8 @@ const PostReactions = ({ post, onReaction }) => {
               <button
                 key={reaction.type}
                 onClick={() => handleReaction(reaction.type)}
-                className={`p-2 rounded-full hover:bg-gray-100 transition-colors ${
-                  currentReaction === reaction.type ? 'bg-blue-100' : ''
-                }`}
+                className={`p-2 rounded-full transition-colors`}
+                style={{ background: currentReaction === reaction.type ? 'var(--color-accent)' : undefined }}
                 title={reaction.label}
               >
                 <span className="text-xl">{reaction.emoji}</span>

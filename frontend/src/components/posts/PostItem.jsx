@@ -100,7 +100,7 @@ const PostItem = ({ post }) => {
         {/* Categories and Tags */}
         <div className="mt-3 flex flex-wrap items-center gap-2">
           {post.category && (
-            <span className="bg-purple-100 text-purple-800 px-2 py-1 rounded-full text-xs font-medium">
+            <span className="px-2 py-1 rounded-full text-xs font-medium" style={{ background: 'var(--color-accent)', color: 'var(--color-primary)' }}>
               {post.category}
             </span>
           )}
@@ -123,16 +123,16 @@ const PostItem = ({ post }) => {
           <button
             onClick={handleLike}
             disabled={loading}
-            className={`flex items-center space-x-1 hover:text-blue-500 disabled:opacity-50 ${
-              isLiked ? 'text-blue-500' : ''
-            }`}
+            className={`flex items-center space-x-1 disabled:opacity-50`}
+            style={{ color: isLiked ? 'var(--color-primary)' : undefined }}
           >
             <span>👍</span>
             <span>{post.likes.length} {post.likes.length === 1 ? 'like' : 'likes'}</span>
           </button>
           <button
             onClick={() => setShowCommentForm(!showCommentForm)}
-            className="flex items-center space-x-1 hover:text-blue-500"
+            className="flex items-center space-x-1"
+            style={{ color: 'var(--color-primary)' }}
           >
             <span>💬</span>
             <span>{post.comments.length} {post.comments.length === 1 ? 'comment' : 'comments'}</span>

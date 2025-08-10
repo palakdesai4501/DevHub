@@ -45,7 +45,7 @@ const Dashboard = () => {
     return (
       <div className="container py-20">
         <div className="text-center">
-          <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+          <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2" style={{ borderBottomColor: 'var(--color-primary)' }}></div>
           <p className="mt-4">Loading profile...</p>
         </div>
       </div>
@@ -75,21 +75,21 @@ const Dashboard = () => {
               <div className="flex flex-wrap gap-4">
                 <Link 
                   to="/edit-profile" 
-                  className="px-4 py-2 btn text-white rounded hover:bg-blue-700 transition-colors"
+                  className="px-4 py-2 btn text-white rounded transition-colors"
                 >
                   <i className="fas fa-user-circle mr-2"></i>
                   Edit Profile
                 </Link>
                 <Link 
                   to="/add-experience" 
-                  className="px-4 py-2 btn text-white rounded hover:bg-green-700 transition-colors"
+                  className="px-4 py-2 btn text-white rounded transition-colors"
                 >
                   <i className="fas fa-briefcase mr-2"></i>
                   Add Experience
                 </Link>
                 <Link 
                   to="/add-education" 
-                  className="px-4 py-2 btn text-white rounded hover:bg-purple-700 transition-colors"
+                  className="px-4 py-2 btn text-white rounded transition-colors"
                 >
                   <i className="fas fa-graduation-cap mr-2"></i>
                   Add Education
@@ -118,7 +118,7 @@ const Dashboard = () => {
                   <p className="text-gray-600 mb-2"><strong>Skills:</strong></p>
                   <div className="flex flex-wrap gap-2">
                     {profile.skills.map((skill, index) => (
-                      <span key={index} className="bg-blue-100 text-blue-800 px-2 py-1 rounded text-sm">
+                      <span key={index} className="px-2 py-1 rounded text-sm" style={{ background: 'var(--color-accent)', color: 'var(--color-primary)' }}>
                         {skill}
                       </span>
                     ))}
@@ -210,17 +210,18 @@ const Dashboard = () => {
           </div>
         ) : (
           // User doesn't have a profile yet
-          <div className="bg-blue-50 border border-blue-200 p-6 rounded-lg text-center card-animate">
-            <i className="fas fa-user text-blue-600 text-4xl mb-4"></i>
-            <h2 className="text-xl font-semibold text-blue-800 mb-4">
+          <div className="p-6 rounded-lg text-center card-animate" style={{ background: 'var(--color-accent)' }}>
+            <i className="fas fa-user text-4xl mb-4" style={{ color: 'var(--color-primary)' }}></i>
+            <h2 className="text-xl font-semibold mb-4" style={{ color: 'var(--color-primary)' }}>
               You have not yet set up a profile
             </h2>
-            <p className="text-blue-600 mb-6">
+            <p className="mb-6" style={{ color: 'var(--color-primary)' }}>
               Please add some info to let other developers know about you
             </p>
             <Link 
               to="/create-profile" 
-              className="inline-block px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+              className="inline-block px-6 py-3 text-white rounded-lg transition-colors"
+              style={{ background: 'var(--color-primary)' }}
             >
               <i className="fas fa-user-plus mr-2"></i>
               Create Profile

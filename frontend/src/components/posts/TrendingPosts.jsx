@@ -108,7 +108,7 @@ const TrendingPosts = () => {
                     <span>{post.comments?.length || 0}</span>
                   </span>
                   {post.category && (
-                    <span className="bg-purple-100 text-purple-800 px-2 py-1 rounded-full text-xs">
+                    <span className="px-2 py-1 rounded-full text-xs" style={{ background: 'var(--color-accent)', color: 'var(--color-primary)' }}>
                       {post.category}
                     </span>
                   )}
@@ -122,7 +122,8 @@ const TrendingPosts = () => {
       <div className="mt-4 pt-4 border-t border-gray-200">
         <Link
           to="/posts"
-          className="text-blue-500 hover:text-blue-700 text-sm font-medium"
+          className="text-sm font-medium"
+          style={{ color: 'var(--color-primary)' }}
         >
           View all posts →
         </Link>

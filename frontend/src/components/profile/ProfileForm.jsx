@@ -116,9 +116,9 @@ const ProfileForm = ({ edit = false }) => {
           {edit ? 'Edit Your Profile' : 'Create Your Profile'}
         </h1>
         
-        <div className="bg-blue-50 border border-blue-200 p-4 rounded-lg mb-8">
-          <i className="fas fa-user text-blue-600 mr-2"></i>
-          <strong className="text-blue-800">
+        <div className="p-4 rounded-lg mb-8" style={{ background: 'var(--color-accent)' }}>
+          <i className="fas fa-user mr-2" style={{ color: 'var(--color-primary)' }}></i>
+          <strong style={{ color: 'var(--color-primary)' }}>
             Let's get some information to make your profile stand out
           </strong>
         </div>
@@ -140,9 +140,10 @@ const ProfileForm = ({ edit = false }) => {
               name="status"
               value={status}
               onChange={onChange}
-              className={`w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 ${
+              className={`w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none ${
                 errors.status ? 'border-red-300' : 'border-gray-300'
               }`}
+              style={{ borderColor: 'var(--color-accent)' }}
             >
               <option value="">* Select Professional Status</option>
               <option value="Developer">Developer</option>
@@ -174,7 +175,8 @@ const ProfileForm = ({ edit = false }) => {
               name="company"
               value={company}
               onChange={onChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+              className="w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none"
+              style={{ borderColor: 'var(--color-accent)' }}
             />
             <small className="text-gray-500">
               Could be your own company or one you work for
@@ -193,7 +195,8 @@ const ProfileForm = ({ edit = false }) => {
               name="website"
               value={website}
               onChange={onChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+              className="w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none"
+              style={{ borderColor: 'var(--color-accent)' }}
             />
             <small className="text-gray-500">
               Could be your own or a company website
@@ -212,7 +215,8 @@ const ProfileForm = ({ edit = false }) => {
               name="location"
               value={location}
               onChange={onChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+              className="w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none"
+              style={{ borderColor: 'var(--color-accent)' }}
             />
             <small className="text-gray-500">
               City & state suggested (eg. Boston, MA)
@@ -231,9 +235,10 @@ const ProfileForm = ({ edit = false }) => {
               name="skills"
               value={skills}
               onChange={onChange}
-              className={`w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 ${
+              className={`w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none ${
                 errors.skills ? 'border-red-300' : 'border-gray-300'
               }`}
+              style={{ borderColor: 'var(--color-accent)' }}
             />
             {errors.skills && (
               <p className="mt-2 text-sm text-red-600">{errors.skills}</p>
@@ -255,7 +260,8 @@ const ProfileForm = ({ edit = false }) => {
               name="githubusername"
               value={githubusername}
               onChange={onChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+              className="w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none"
+              style={{ borderColor: 'var(--color-accent)' }}
             />
             <small className="text-gray-500">
               If you want your latest repos and a GitHub link, include your username
@@ -274,7 +280,8 @@ const ProfileForm = ({ edit = false }) => {
               value={bio}
               onChange={onChange}
               rows="5"
-              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+              className="w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none"
+              style={{ borderColor: 'var(--color-accent)' }}
             ></textarea>
             <small className="text-gray-500">Tell us a little about yourself</small>
           </div>
@@ -332,10 +339,9 @@ const ProfileForm = ({ edit = false }) => {
               type="submit"
               disabled={loading}
               className={`px-6 py-3 rounded-md text-white font-medium ${
-                loading 
-                  ? 'bg-gray-400 cursor-not-allowed' 
-                  : 'bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500'
+                loading ? 'cursor-not-allowed' : ''
               }`}
+              style={{ background: loading ? 'var(--color-accent)' : 'var(--color-primary)' }}
             >
               {loading ? (
                 <>

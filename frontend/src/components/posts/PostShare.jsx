@@ -11,25 +11,25 @@ const PostShare = ({ post }) => {
     {
       name: 'Twitter',
       icon: 'fab fa-twitter',
-      color: 'bg-blue-400 hover:bg-blue-500',
+      color: 'bg-[var(--color-primary)] hover:bg-[var(--color-secondary)]',
       url: `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`
     },
     {
       name: 'Facebook',
       icon: 'fab fa-facebook',
-      color: 'bg-blue-600 hover:bg-blue-700',
+      color: 'bg-[var(--color-primary)] hover:bg-[var(--color-secondary)]',
       url: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`
     },
     {
       name: 'LinkedIn',
       icon: 'fab fa-linkedin',
-      color: 'bg-blue-700 hover:bg-blue-800',
+      color: 'bg-[var(--color-primary)] hover:bg-[var(--color-secondary)]',
       url: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`
     },
     {
       name: 'WhatsApp',
       icon: 'fab fa-whatsapp',
-      color: 'bg-green-500 hover:bg-green-600',
+      color: 'bg-[var(--color-primary)] hover:bg-[var(--color-secondary)]',
       url: `https://wa.me/?text=${encodeURIComponent(shareText + ' ' + shareUrl)}`
     },
     {
@@ -68,7 +68,8 @@ const PostShare = ({ post }) => {
       {/* Share Button */}
       <button
         onClick={() => setShowShareModal(true)}
-        className="flex items-center space-x-1 text-gray-500 hover:text-blue-500 transition-colors"
+        className="flex items-center space-x-1 text-gray-500 transition-colors"
+        style={{ color: 'var(--color-primary)' }}
         title="Share Post"
       >
         <i className="fas fa-share-alt"></i>
@@ -117,11 +118,8 @@ const PostShare = ({ post }) => {
                 />
                 <button
                   onClick={copyToClipboard}
-                  className={`px-4 py-2 rounded-lg transition-colors ${
-                    copied
-                      ? 'bg-green-500 text-white'
-                      : 'bg-blue-500 text-white hover:bg-blue-600'
-                  }`}
+                  className={`px-4 py-2 rounded-lg transition-colors text-white`}
+                  style={{ background: copied ? 'var(--color-secondary)' : 'var(--color-primary)' }}
                 >
                   {copied ? (
                     <i className="fas fa-check"></i>
@@ -131,7 +129,7 @@ const PostShare = ({ post }) => {
                 </button>
               </div>
               {copied && (
-                <p className="text-green-600 text-sm mt-1">Link copied to clipboard!</p>
+                <p className="text-sm mt-1" style={{ color: 'var(--color-primary)' }}>Link copied to clipboard!</p>
               )}
             </div>
 
