@@ -89,6 +89,16 @@ export const NotificationProvider = ({ children }) => {
     }
   }, []);
 
+  // Clear all notifications
+  const clearAll = useCallback(async () => {
+    try {
+      await api.delete('/notifications');
+      setNotifications([]);
+    } catch (err) {
+      setError('Failed to clear notifications');
+    }
+  }, []);
+
   // Unread count
   const unreadCount = useMemo(() => notifications.filter((n) => !n.read).length, [notifications]);
 
@@ -100,8 +110,9 @@ export const NotificationProvider = ({ children }) => {
     fetchNotifications,
     markAsRead,
     markAllAsRead,
-    deleteNotification
-  }), [notifications, loading, error, unreadCount, fetchNotifications, markAsRead, markAllAsRead, deleteNotification]);
+    deleteNotification,
+    clearAll
+  }), [notifications, loading, error, unreadCount, fetchNotifications, markAsRead, markAllAsRead, deleteNotification, clearAll]);
 
   return (
     <NotificationContext.Provider value={value}>

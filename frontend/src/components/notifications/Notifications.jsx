@@ -9,7 +9,8 @@ const Notifications = () => {
     error,
     unreadCount,
     markAsRead,
-    markAllAsRead
+    markAllAsRead,
+    clearAll
   } = useNotification();
   const [filter, setFilter] = useState('all'); // all, unread, read
 
@@ -28,8 +29,8 @@ const Notifications = () => {
     return (
       <div className="container py-20">
         <div className="max-w-4xl mx-auto">
-          <div className="text-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto"></div>
+            <div className="text-center">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 mx-auto" style={{ borderBottomColor: 'var(--color-primary)' }}></div>
             <p className="mt-4 text-gray-600">Loading notifications...</p>
           </div>
         </div>
@@ -57,16 +58,26 @@ const Notifications = () => {
           <h1 className="text-3xl font-bold">Notifications</h1>
           <div className="flex items-center space-x-4">
             {unreadCount > 0 && (
-              <span className="bg-blue-500 text-white px-3 py-1 rounded-full text-sm">
+              <span className="px-3 py-1 rounded-full text-sm text-white" style={{ background: 'var(--color-primary)' }}>
                 {unreadCount} new
               </span>
             )}
             <button
               onClick={markAllAsRead}
               disabled={unreadCount === 0}
-              className="text-blue-500 hover:text-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="disabled:opacity-50 disabled:cursor-not-allowed"
+              style={{ color: 'var(--color-primary)' }}
             >
               Mark all as read
+            </button>
+            <button
+              onClick={clearAll}
+              disabled={unreadCount > 0 || notifications.length === 0}
+              className="disabled:opacity-50 disabled:cursor-not-allowed"
+              style={{ color: 'var(--color-primary)' }}
+              title={unreadCount > 0 ? 'Mark all as read first' : 'Clear all notifications'}
+            >
+              Clear all
             </button>
           </div>
         </div>
@@ -77,30 +88,27 @@ const Notifications = () => {
             <button
               onClick={() => setFilter('all')}
               className={`flex-1 py-3 px-4 text-center font-medium ${
-                filter === 'all'
-                  ? 'text-blue-600 border-b-2 border-blue-600'
-                  : 'text-gray-500 hover:text-gray-700'
+                filter === 'all' ? '' : 'text-gray-500 hover:text-gray-700'
               }`}
+              style={filter === 'all' ? { color: 'var(--color-primary)', borderBottom: '2px solid var(--color-primary)' } : undefined}
             >
               All ({notifications.length})
             </button>
             <button
               onClick={() => setFilter('unread')}
               className={`flex-1 py-3 px-4 text-center font-medium ${
-                filter === 'unread'
-                  ? 'text-blue-600 border-b-2 border-blue-600'
-                  : 'text-gray-500 hover:text-gray-700'
+                filter === 'unread' ? '' : 'text-gray-500 hover:text-gray-700'
               }`}
+              style={filter === 'unread' ? { color: 'var(--color-primary)', borderBottom: '2px solid var(--color-primary)' } : undefined}
             >
               Unread ({unreadCount})
             </button>
             <button
               onClick={() => setFilter('read')}
               className={`flex-1 py-3 px-4 text-center font-medium ${
-                filter === 'read'
-                  ? 'text-blue-600 border-b-2 border-blue-600'
-                  : 'text-gray-500 hover:text-gray-700'
+                filter === 'read' ? '' : 'text-gray-500 hover:text-gray-700'
               }`}
+              style={filter === 'read' ? { color: 'var(--color-primary)', borderBottom: '2px solid var(--color-primary)' } : undefined}
             >
               Read ({notifications.length - unreadCount})
             </button>

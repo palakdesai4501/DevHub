@@ -64,4 +64,17 @@ router.delete('/:id', auth, async (req, res) => {
   }
 });
 
+// @route   DELETE /api/notifications
+// @desc    Delete all notifications for the logged-in user
+// @access  Private
+router.delete('/', auth, async (req, res) => {
+  try {
+    await Notification.deleteMany({ user: req.user.id });
+    res.json({ msg: 'All notifications cleared' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Server Error');
+  }
+});
+
 module.exports = router; 
