@@ -211,7 +211,12 @@ export const ProfileProvider = ({ children }) => {
     if (window.confirm('Are you sure? This can NOT be undone!')) {
       try {
         await api.delete('/profile');
+        // Clear profile state
         dispatch({ type: CLEAR_PROFILE });
+        // Remove auth token so user is fully logged out
+        localStorage.removeItem('token');
+        // Redirect to login
+        window.location.href = '/login';
       } catch (err) {
         dispatch({
           type: PROFILE_ERROR,

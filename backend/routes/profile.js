@@ -132,19 +132,32 @@ router.get("/user/:user_id", async (req, res) => {
 // @access   Private
 router.delete("/", auth, async (req, res) => {
   try {
-    // Remove user posts
-    await Post.deleteMany({ user: req.user.id });
-    
-    // Remove profile
-    await Profile.findOneAndRemove({ user: req.user.id });
-    
-    // Remove user
-    await User.findOneAndRemove({ _id: req.user.id });
+    const userId = req.user.id;
 
-    res.json({ msg: "User deleted" });
+    // Remove user posts
+    const postsResult = await Post.deleteMany({ user: userId });
+
+    // Remove profile
+    const profileResult = await Profile.findOneAndDelete({ user: userId });
+
+    // Remove user (use deleteOne to ensure deletion in Mongoose v8)
+    const userResult = await User.deleteOne({ _id: userId });
+
+    if (userResult.deletedCount !== 1) {
+      return res.status(404).json({ msg: 'User not found or already deleted', details: { userId } });
+    }
+
+    res.json({ 
+      msg: 'User deleted', 
+      deleted: {
+        posts: postsResult.deletedCount || 0,
+        profile: profileResult ? 1 : 0,
+        user: userResult.deletedCount
+      }
+    });
   } catch (err) {
-    console.error(err.message);
-    res.status(500).send("Server Error");
+    console.error(err);
+    res.status(500).send('Server Error');
   }
 });
 
