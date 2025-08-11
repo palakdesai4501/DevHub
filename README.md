@@ -63,6 +63,8 @@ A full-stack MERN (MongoDB, Express.js, React.js, Node.js) social network platfo
 - **JWT** for authentication
 - **bcryptjs** for password hashing
 - **express-validator** for input validation
+- **Socket.IO** for real-time notifications
+- **Cloudinary + Multer** for image uploads
 - **CORS** for cross-origin requests
 
 ## 🚀 Quick Start
@@ -93,10 +95,17 @@ A full-stack MERN (MongoDB, Express.js, React.js, Node.js) social network platfo
 
 3. **Environment Setup**
    ```bash
-   # Backend (.env file in backend directory)
-   MONGO_URI=mongodb://localhost:27017/devconnector
-   JWT_SECRET=your_jwt_secret_here
-   PORT=5000
+    # Backend (.env file in backend directory)
+    NODE_ENV=development
+    PORT=5001
+    MONGO_URI=mongodb://localhost:27017/devconnector
+    JWT_SECRET=your_jwt_secret_here
+    # Optional to avoid GitHub rate limits for profile repos
+    GITHUB_TOKEN=your_github_personal_access_token
+    # Required for image uploads
+    CLOUDINARY_CLOUD_NAME=your_cloudinary_cloud_name
+    CLOUDINARY_API_KEY=your_cloudinary_api_key
+    CLOUDINARY_API_SECRET=your_cloudinary_api_secret
    ```
 
 4. **Start the development servers**
@@ -110,7 +119,7 @@ A full-stack MERN (MongoDB, Express.js, React.js, Node.js) social network platfo
 
 5. **Access the application**
    - Frontend: http://localhost:5173
-   - Backend API: http://localhost:5000
+    - Backend API: http://localhost:5001
 
 ## 📁 Project Structure
 
@@ -120,7 +129,8 @@ devconnector/
 │   ├── config/
 │   │   └── db.js
 │   ├── middleware/
-│   │   └── auth.js
+│   │   ├── auth.js
+│   │   └── upload.js
 │   ├── models/
 │   │   ├── User.js
 │   │   ├── Profile.js
@@ -159,6 +169,7 @@ devconnector/
 
 ### Advanced Posts System
 - **Image Upload**: Drag-and-drop image upload with preview
+- **Image-only Posts**: Post an image without text
 - **Categories**: Predefined categories (Technology, Programming, Design, etc.)
 - **Tags**: Custom tags for better content organization
 - **Analytics**: Engagement metrics and performance insights
@@ -169,6 +180,7 @@ devconnector/
 
 ### User Experience
 - **Responsive Design**: Mobile-first approach with Tailwind CSS
+- **Consistent Palette**: App-wide color palette via CSS variables in `frontend/src/App.css`
 - **Real-time Updates**: Instant feedback for user actions
 - **Loading States**: Smooth loading animations
 - **Error Handling**: Comprehensive error messages
@@ -197,7 +209,7 @@ devconnector/
    ```
 
 3. **Environment Variables**
-   - `VITE_API_URL`: Your backend API URL
+   - `VITE_API_BASE_URL`: Your backend origin (e.g., `https://api.yourdomain.com` or `http://localhost:5001`). The app uses `${VITE_API_BASE_URL}/api`.
 
 ### Backend Deployment (Heroku/Railway)
 
@@ -236,15 +248,19 @@ devconnector/
 
 **Backend (.env)**
 ```env
+NODE_ENV=development
+PORT=5001
 MONGO_URI=mongodb://localhost:27017/devconnector
 JWT_SECRET=your_super_secret_jwt_key
-PORT=5000
-NODE_ENV=development
+GITHUB_TOKEN=your_github_personal_access_token
+CLOUDINARY_CLOUD_NAME=your_cloudinary_cloud_name
+CLOUDINARY_API_KEY=your_cloudinary_api_key
+CLOUDINARY_API_SECRET=your_cloudinary_api_secret
 ```
 
 **Frontend (.env)**
 ```env
-VITE_API_URL=http://localhost:5000/api
+VITE_API_BASE_URL=http://localhost:5001
 ```
 
 ### Customization
