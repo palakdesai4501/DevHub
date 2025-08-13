@@ -1,4 +1,4 @@
-# 🚀 DevConnector - Developer Social Network
+# 🚀 DevHub - Developer Social Network
 
 A full-stack MERN (MongoDB, Express.js, React.js, Node.js) social network platform designed specifically for developers to connect, share knowledge, and build their professional network.
 

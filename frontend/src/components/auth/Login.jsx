@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
+import api from '../../utils/api';
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -21,6 +22,59 @@ const Login = () => {
       navigate('/dashboard');
     }
   }, [isAuthenticated, navigate]);
+
+  // Initialize Google Sign-In
+  useEffect(() => {
+    const initializeGoogleSignIn = () => {
+      if (!window.google || !import.meta.env.VITE_GOOGLE_CLIENT_ID) {
+        console.warn('Google Sign-In not available');
+        return;
+      }
+
+      window.google.accounts.id.initialize({
+        client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID,
+        callback: async (response) => {
+          try {
+            setLoading(true);
+            const res = await api.post('/auth/google', { credential: response.credential });
+            localStorage.setItem('token', res.data.token);
+            // The auth context will update and trigger navigation
+            window.location.reload(); // Force a reload to update auth state
+          } catch (error) {
+            console.error('Google login error:', error);
+            setErrors({ general: 'Google login failed. Please try again.' });
+          } finally {
+            setLoading(false);
+          }
+        },
+      });
+
+      window.google.accounts.id.renderButton(
+        document.getElementById('googleSignInDiv'),
+        { 
+          theme: 'outline', 
+          size: 'large', 
+          text: 'continue_with',
+          width: 300
+        }
+      );
+    };
+
+    // Wait for Google script to load
+    if (window.google) {
+      initializeGoogleSignIn();
+    } else {
+      const checkGoogle = setInterval(() => {
+        if (window.google) {
+          clearInterval(checkGoogle);
+          initializeGoogleSignIn();
+        }
+      }, 100);
+
+      // Clean up interval after 10 seconds
+      setTimeout(() => clearInterval(checkGoogle), 10000);
+    }
+  }, [navigate]);
 
   const onChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -195,9 +249,12 @@ const Login = () => {
               </div>
               <div className="relative flex justify-center text-sm">
                 <span className="px-2 bg-white text-[var(--color-secondary)]">
-                  Welcome back to DevConnector
+                  Welcome back to DevHub
                 </span>
               </div>
+            </div>
+            <div className="mt-4 flex justify-center">
+              <div id="googleSignInDiv" />
             </div>
           </div>
         </div>

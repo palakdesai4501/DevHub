@@ -4,6 +4,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const auth = require('../middleware/auth');
 const { check, validationResult } = require('express-validator');
+const { OAuth2Client } = require('google-auth-library');
 
 const User = require('../models/User');
 
@@ -75,3 +76,37 @@ router.post(
 );
 
 module.exports = router; 
+ 
+// --- Google OAuth (One-tap / Sign-In with Google) ---
+// @route    POST api/auth/google
+// @desc     Verify Google ID token and return our JWT
+// @access   Public
+router.post('/google', async (req, res) => {
+  try {
+    const { credential } = req.body; // Google ID token from client
+    if (!credential) {
+      return res.status(400).json({ msg: 'Missing Google credential' });
+    }
+
+    const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+    const ticket = await client.verifyIdToken({ idToken: credential, audience: process.env.GOOGLE_CLIENT_ID });
+    const payload = ticket.getPayload();
+    const { email, name, picture, email_verified, sub } = payload;
+    if (!email_verified) {
+      return res.status(400).json({ msg: 'Google account email not verified' });
+    }
+
+    let user = await User.findOne({ email });
+    if (!user) {
+      // Create a user without password, mark as Google user
+      user = new User({ name: name || 'Google User', email, password: sub, avatar: picture });
+      await user.save();
+    }
+
+    const token = jwt.sign({ user: { id: user.id } }, process.env.JWT_SECRET || 'mysecret', { expiresIn: '24h' });
+    res.json({ token });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Server error');
+  }
+});

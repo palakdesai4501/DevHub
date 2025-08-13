@@ -136,7 +136,6 @@ const Navbar = () => {
           }`}
         >
           <i className="fas fa-user mr-1"></i>
-          Dashboard
         </Link>
       </li>
       <li>
@@ -193,14 +192,14 @@ const Navbar = () => {
           <div className="flex items-center">
             <Link to="/" className="flex-shrink-0 flex items-center">
               <i className="fas fa-code text-white text-xl mr-2"></i>
-              <span className="text-white text-xl font-bold">DevConnector</span>
+              <span className="text-white text-xl font-bold">DevHub</span>
             </Link>
           </div>
           
           <div className="flex items-center">
             {/* Show user name if authenticated */}
             {!loading && isAuthenticated && user && (
-              <span className="text-white mr-4">
+              <span className="text-white mr-4 font-extrabold">
                 Welcome, {user.name}!
               </span>
             )}

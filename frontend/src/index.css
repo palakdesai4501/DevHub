@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-/* Custom styles for DevConnector */
+/* Custom styles for DevHub */
 @layer components {
   .navbar {
     @apply shadow-lg;
