@@ -35,3 +35,5 @@ frontend/dist/
 # Config files
 config/production.json DEPLOYMENT_GUIDE.md
 DEPLOYMENT_CHECKLIST.md
+DEPLOYMENT_GUIDE.md
+DEPLOYMENT_CHECKLIST.md
