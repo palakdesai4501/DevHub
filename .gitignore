@@ -33,4 +33,5 @@ frontend/dist/
 .DS_Store
 
 # Config files
-config/production.json 
+config/production.json DEPLOYMENT_GUIDE.md
+DEPLOYMENT_CHECKLIST.md

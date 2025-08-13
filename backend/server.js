@@ -6,11 +6,33 @@ const { Server } = require('socket.io');
 
 const app = express();
 const server = http.createServer(app);
+
+// CORS configuration for production
+const corsOptions = {
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+    
+    const allowedOrigins = [
+      'http://localhost:5173',
+      'http://localhost:3000',
+      // Add your production frontend URL here after deployment
+      // 'https://your-app.vercel.app'
+    ];
+    
+    if (allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'x-auth-token']
+};
+
 const io = new Server(server, {
-  cors: {
-    origin: '*', // You can restrict this in production
-    methods: ['GET', 'POST', 'PUT', 'DELETE']
-  }
+  cors: corsOptions
 });
 
 // Make io accessible in routes/controllers
@@ -20,8 +42,8 @@ app.set('io', io);
 connectDB();
 
 // Init Middleware
-app.use(express.json());
-app.use(cors());
+app.use(express.json({ limit: '10mb' }));
+app.use(cors(corsOptions));
 
 // Define Routes
 app.use('/api/users', require('./routes/users'));
@@ -44,5 +66,5 @@ io.on('connection', (socket) => {
   });
 });
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5001;
 server.listen(PORT, () => console.log(`Server running on port ${PORT}`)); 
