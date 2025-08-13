@@ -10,36 +10,74 @@ const ProfileDetail = () => {
   const [repos, setRepos] = useState([]);
   const [reposLoading, setReposLoading] = useState(false);
   const [reposError, setReposError] = useState(null);
+  const [currentProfileId, setCurrentProfileId] = useState(null);
 
   useEffect(() => {
+    // Clear repos and reset state when navigating to a different profile
+    setRepos([]);
+    setReposError(null);
+    setReposLoading(false);
+    setCurrentProfileId(null);
+    
     getProfileById(id);
   }, [getProfileById, id]);
 
-  // Fetch GitHub repos if githubusername exists
+  // Fetch GitHub repos when profile data is available and has changed
   useEffect(() => {
     const fetchRepos = async () => {
-      if (profile?.githubusername) {
+      // Only proceed if we have a profile and it matches the current route parameter
+      if (!profile?.user?._id || profile.user._id !== id) {
+        setRepos([]);
+        setReposLoading(false);
+        setCurrentProfileId(null);
+        return;
+      }
+
+      // If this is the same profile we already loaded repos for, don't refetch
+      if (currentProfileId === profile.user._id) {
+        return;
+      }
+
+      // Clear previous repos immediately when profile changes
+      setRepos([]);
+      setReposError(null);
+      const newProfileId = profile.user._id;
+      setCurrentProfileId(newProfileId);
+      
+      if (profile.githubusername) {
         setReposLoading(true);
-        setReposError(null);
         try {
           const username = profile.githubusername?.split('/').filter(Boolean).pop();
           if (!username) {
             setRepos([]);
+            setReposLoading(false);
             return;
           }
+          
           const res = await api.get(`/profile/github/${username}`);
-          setRepos(res.data);
+          
+          // Triple-check that we're still looking at the same profile and URL
+          if (newProfileId === profile.user._id && profile.user._id === id) {
+            setRepos(res.data);
+          }
         } catch (err) {
-          setReposError('Could not fetch GitHub repositories.');
+          if (newProfileId === profile.user._id && profile.user._id === id) {
+            setReposError('Could not fetch GitHub repositories.');
+            setRepos([]);
+          }
         } finally {
-          setReposLoading(false);
+          if (newProfileId === profile.user._id && profile.user._id === id) {
+            setReposLoading(false);
+          }
         }
       } else {
         setRepos([]);
+        setReposLoading(false);
       }
     };
+
     fetchRepos();
-  }, [profile?.githubusername]);
+  }, [profile?.user?._id, profile?.githubusername, id]); // Only depend on external values, not internal state
 
   if (loading) {
     return (
@@ -72,7 +110,7 @@ const ProfileDetail = () => {
         {/* Back to Profiles */}
         <Link 
           to="/profiles" 
-          className="inline-flex items-center text-blue-600 hover:text-blue-800 mb-6"
+          className="inline-flex items-center text-[var(--color-primary)] hover:text-[var(--color-secondary)] mb-6"
         >
           <i className="fas fa-arrow-left mr-2"></i>
           Back to Profiles
@@ -177,7 +215,7 @@ const ProfileDetail = () => {
                 {profile.skills.map((skill, index) => (
                   <span 
                     key={index} 
-                    className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium"
+                    className="bg-[var(--color-accent)] text-[var(--color-primary)] px-3 py-1 rounded-full text-sm font-medium"
                   >
                     {skill}
                   </span>
@@ -322,7 +360,7 @@ const ProfileDetail = () => {
                           href={repo.html_url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-blue-700 font-semibold hover:underline text-lg"
+                          className="text-[var(--color-primary)] font-semibold hover:underline text-lg"
                         >
                           {repo.name}
                         </a>
