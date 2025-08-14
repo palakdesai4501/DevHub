@@ -242,7 +242,7 @@ devhub/
    ```env
    NODE_ENV=production
    PORT=5001
-   MONGO_URI=mongodb+srv://your_username:your_password@your_cluster.mongodb.net/devhub
+   MONGO_URI=mongodb+srv://USER:PASS@CLUSTER.mongodb.net/devhub
    JWT_SECRET=your_super_secret_jwt_key
    GITHUB_TOKEN=your_github_personal_access_token
    CLOUDINARY_CLOUD_NAME=your_cloudinary_cloud_name
