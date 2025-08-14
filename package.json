@@ -1,5 +1,5 @@
 {
-  "name": "devconnector-fullstack",
+  "name": "devhub-fullstack",
   "version": "1.0.0",
   "description": "A social network for developers - Full Stack MERN Application",
   "main": "backend/server.js",

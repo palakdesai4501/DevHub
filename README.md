@@ -6,6 +6,7 @@ A full-stack MERN (MongoDB, Express.js, React.js, Node.js) social network platfo
 
 ### 🔐 Authentication & User Management
 - User registration and login with JWT authentication
+- **Google OAuth 2.0** sign-in with One Tap integration
 - Protected routes and secure token management
 - User profile management with avatar support
 
@@ -32,8 +33,9 @@ A full-stack MERN (MongoDB, Express.js, React.js, Node.js) social network platfo
 - Tag-based content organization
 
 ### 🔔 Notifications System
-- Real-time notifications for likes, comments, and follows
+- **Real-time notifications** with Socket.IO for likes, comments, and follows
 - Read/unread status management
+- **Clear all notifications** functionality
 - Notification preferences
 
 ### 👥 Social Features
@@ -61,10 +63,11 @@ A full-stack MERN (MongoDB, Express.js, React.js, Node.js) social network platfo
 - **Node.js** with Express.js
 - **MongoDB** with Mongoose ODM
 - **JWT** for authentication
+- **Google OAuth 2.0** with google-auth-library
 - **bcryptjs** for password hashing
 - **express-validator** for input validation
 - **Socket.IO** for real-time notifications
-- **Cloudinary + Multer** for image uploads
+- **Cloudinary + Multer** for image uploads and storage
 - **CORS** for cross-origin requests
 
 ## 🚀 Quick Start
@@ -78,8 +81,8 @@ A full-stack MERN (MongoDB, Express.js, React.js, Node.js) social network platfo
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/devconnector.git
-   cd devconnector
+   git clone https://github.com/yourusername/DevHub.git
+   cd DevHub
    ```
 
 2. **Install dependencies**
@@ -98,7 +101,7 @@ A full-stack MERN (MongoDB, Express.js, React.js, Node.js) social network platfo
     # Backend (.env file in backend directory)
     NODE_ENV=development
     PORT=5001
-    MONGO_URI=mongodb://localhost:27017/devconnector
+    MONGO_URI=mongodb://localhost:27017/devhub
     JWT_SECRET=your_jwt_secret_here
     # Optional to avoid GitHub rate limits for profile repos
     GITHUB_TOKEN=your_github_personal_access_token
@@ -106,6 +109,14 @@ A full-stack MERN (MongoDB, Express.js, React.js, Node.js) social network platfo
     CLOUDINARY_CLOUD_NAME=your_cloudinary_cloud_name
     CLOUDINARY_API_KEY=your_cloudinary_api_key
     CLOUDINARY_API_SECRET=your_cloudinary_api_secret
+    # Required for Google OAuth
+    GOOGLE_CLIENT_ID=your_google_oauth_client_id
+   ```
+
+   ```bash
+    # Frontend (.env file in frontend directory)
+    VITE_API_BASE_URL=http://localhost:5001
+    VITE_GOOGLE_CLIENT_ID=your_google_oauth_client_id
    ```
 
 4. **Start the development servers**
@@ -119,12 +130,20 @@ A full-stack MERN (MongoDB, Express.js, React.js, Node.js) social network platfo
 
 5. **Access the application**
    - Frontend: http://localhost:5173
-    - Backend API: http://localhost:5001
+   - Backend API: http://localhost:5001
+
+6. **Google OAuth Setup** (Optional but recommended)
+   - Go to [Google Cloud Console](https://console.cloud.google.com/)
+   - Create a new project or select existing
+   - Enable Google+ API
+   - Create OAuth 2.0 Client credentials
+   - Add `http://localhost:5173` to Authorized JavaScript origins
+   - Copy Client ID to environment variables
 
 ## 📁 Project Structure
 
 ```
-devconnector/
+devhub/
 ├── backend/
 │   ├── config/
 │   │   └── db.js
@@ -194,41 +213,47 @@ devconnector/
 
 ## 🚀 Deployment
 
-### Frontend Deployment (Vercel/Netlify)
+### Live Application
+- **Frontend**: https://dev-hub-black.vercel.app/
+- **Backend**: https://devhub-production-2ba8.up.railway.app
+- **Database**: MongoDB Atlas
 
-1. **Build the project**
-   ```bash
-   cd frontend
-   npm run build
+### Frontend Deployment (Vercel)
+
+1. **Deploy to Vercel**
+   - Connect your GitHub repository
+   - Set root directory to `frontend`
+   - Add environment variables
+
+2. **Environment Variables (Vercel)**
+   ```env
+   VITE_API_BASE_URL=https://your-backend-url.up.railway.app
+   VITE_GOOGLE_CLIENT_ID=your_google_oauth_client_id
    ```
 
-2. **Deploy to Vercel**
-   ```bash
-   npm install -g vercel
-   vercel
+### Backend Deployment (Railway)
+
+1. **Deploy to Railway**
+   - Connect your GitHub repository
+   - Set root directory to `backend` or use custom build commands
+   - Add environment variables
+
+2. **Environment Variables (Railway)**
+   ```env
+   NODE_ENV=production
+   PORT=5001
+   MONGO_URI=mongodb+srv://username:password@cluster.mongodb.net/devhub
+   JWT_SECRET=your_super_secret_jwt_key
+   GITHUB_TOKEN=your_github_personal_access_token
+   CLOUDINARY_CLOUD_NAME=your_cloudinary_cloud_name
+   CLOUDINARY_API_KEY=your_cloudinary_api_key
+   CLOUDINARY_API_SECRET=your_cloudinary_api_secret
+   GOOGLE_CLIENT_ID=your_google_oauth_client_id
    ```
 
-3. **Environment Variables**
-   - `VITE_API_BASE_URL`: Your backend origin (e.g., `https://api.yourdomain.com` or `http://localhost:5001`). The app uses `${VITE_API_BASE_URL}/api`.
-
-### Backend Deployment (Heroku/Railway)
-
-1. **Prepare for deployment**
-   ```bash
-   cd backend
-   npm install
-   ```
-
-2. **Environment Variables**
-   - `MONGO_URI`: MongoDB connection string
-   - `JWT_SECRET`: Your JWT secret
-   - `PORT`: Port number (auto-assigned by platform)
-
-3. **Deploy to Heroku**
-   ```bash
-   heroku create your-app-name
-   git push heroku main
-   ```
+3. **Build Commands (if needed)**
+   - Build Command: `cd backend && npm install`
+   - Start Command: `cd backend && npm start`
 
 ### Database Setup
 
@@ -250,17 +275,19 @@ devconnector/
 ```env
 NODE_ENV=development
 PORT=5001
-MONGO_URI=mongodb://localhost:27017/devconnector
+MONGO_URI=mongodb://localhost:27017/devhub
 JWT_SECRET=your_super_secret_jwt_key
 GITHUB_TOKEN=your_github_personal_access_token
 CLOUDINARY_CLOUD_NAME=your_cloudinary_cloud_name
 CLOUDINARY_API_KEY=your_cloudinary_api_key
 CLOUDINARY_API_SECRET=your_cloudinary_api_secret
+GOOGLE_CLIENT_ID=your_google_oauth_client_id
 ```
 
 **Frontend (.env)**
 ```env
 VITE_API_BASE_URL=http://localhost:5001
+VITE_GOOGLE_CLIENT_ID=your_google_oauth_client_id
 ```
 
 ### Customization
@@ -269,6 +296,34 @@ VITE_API_BASE_URL=http://localhost:5001
 2. **Categories**: Update categories in `PostForm.jsx`
 3. **Reactions**: Add new reactions in `PostReactions.jsx`
 4. **Analytics**: Customize analytics in `PostAnalytics.jsx`
+
+## 🐛 Troubleshooting
+
+### Common Deployment Issues
+
+**Frontend can't connect to backend:**
+- Check `VITE_API_BASE_URL` in Vercel environment variables
+- Ensure CORS is configured with production frontend URL
+- Verify Railway backend is running
+
+**Google OAuth not working:**
+- Add production URL to Google Cloud Console authorized origins
+- Check `VITE_GOOGLE_CLIENT_ID` matches backend `GOOGLE_CLIENT_ID`
+- Ensure Google script is loaded in `index.html`
+
+**Image uploads failing:**
+- Verify all Cloudinary environment variables in Railway
+- Check Cloudinary account limits and usage
+
+**Database connection errors:**
+- Verify MongoDB Atlas connection string
+- Check IP whitelist (allow 0.0.0.0/0 for Railway)
+- Ensure database user has proper permissions
+
+**Build failures on Railway:**
+- Check if root directory is set to `backend`
+- Use custom build commands if needed
+- Verify all dependencies in `package.json`
 
 ## 🤝 Contributing
 
