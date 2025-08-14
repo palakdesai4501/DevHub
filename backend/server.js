@@ -16,8 +16,7 @@ const corsOptions = {
     const allowedOrigins = [
       'http://localhost:5173',
       'http://localhost:3000',
-      // Add your production frontend URL here after deployment
-      // 'https://your-app.vercel.app'
+      'https://dev-hub-black.vercel.app'
     ];
     
     if (allowedOrigins.indexOf(origin) !== -1) {
