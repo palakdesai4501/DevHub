@@ -16,7 +16,8 @@ const corsOptions = {
     const allowedOrigins = [
       'http://localhost:5173',
       'http://localhost:3000',
-      'https://dev-hub-black.vercel.app'
+      'https://dev-hub-black.vercel.app',
+      'https://devhub-backend.onrender.com'
     ];
     
     if (allowedOrigins.indexOf(origin) !== -1) {
