@@ -313,6 +313,52 @@ input:focus, select:focus, textarea:focus {
   }
 }
 
+/* Mobile-first responsive design */
+@media (max-width: 768px) {
+  .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  
+  .text-responsive {
+    font-size: 0.875rem;
+  }
+  
+  .p-responsive {
+    padding: 1rem;
+  }
+  
+  .mb-responsive {
+    margin-bottom: 1rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .text-responsive {
+    font-size: 1rem;
+  }
+  
+  .p-responsive {
+    padding: 1.5rem;
+  }
+  
+  .mb-responsive {
+    margin-bottom: 1.5rem;
+  }
+}
+
+/* Touch-friendly buttons for mobile */
+@media (max-width: 768px) {
+  button, .btn {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  input, select, textarea {
+    min-height: 44px;
+  }
+}
+
 /* Dark mode support */
 @media (prefers-color-scheme: dark) {
   .post {

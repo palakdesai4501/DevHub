@@ -114,9 +114,9 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[var(--color-bg)] flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-[var(--color-bg)] flex flex-col justify-center py-8 px-4 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
-        <h2 className="mt-6 text-center text-3xl font-extrabold text-[var(--color-primary)]" style={{ fontFamily: 'JetBrains Mono, monospace' }}>
+        <h2 className="mt-6 text-center text-2xl md:text-3xl font-extrabold text-[var(--color-primary)]" style={{ fontFamily: 'JetBrains Mono, monospace' }}>
           Sign in to your account
         </h2>
         <p className="mt-2 text-center text-sm text-[var(--color-secondary)]">
@@ -127,8 +127,8 @@ const Login = () => {
         </p>
       </div>
 
-      <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-        <div className="bg-white py-8 px-4 shadow-lg sm:rounded-2xl sm:px-10 card-animate" style={{ fontFamily: 'JetBrains Mono, monospace' }}>
+      <div className="mt-6 sm:mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+        <div className="bg-white py-6 px-4 shadow-lg sm:rounded-2xl sm:px-8 md:px-10 card-animate" style={{ fontFamily: 'JetBrains Mono, monospace' }}>
           <form className="space-y-6" onSubmit={onSubmit}>
             {errors.general && (
               <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded">
@@ -159,7 +159,7 @@ const Login = () => {
                   required
                   value={email}
                   onChange={onChange}
-                  className={`appearance-none block w-full px-3 py-2 border rounded-md shadow-sm placeholder-gray-400 focus:outline-none sm:text-sm ${
+                  className={`appearance-none block w-full px-3 py-2 md:py-3 border rounded-md shadow-sm placeholder-gray-400 focus:outline-none text-sm md:text-base ${
                     errors.email ? 'border-red-300' : 'border-gray-300'
                   }`}
                   style={{ borderColor: 'var(--color-accent)' }}
@@ -184,7 +184,7 @@ const Login = () => {
                   required
                   value={password}
                   onChange={onChange}
-                  className={`appearance-none block w-full px-3 py-2 border rounded-md shadow-sm placeholder-gray-400 focus:outline-none sm:text-sm ${
+                  className={`appearance-none block w-full px-3 py-2 md:py-3 border rounded-md shadow-sm placeholder-gray-400 focus:outline-none text-sm md:text-base ${
                     errors.password ? 'border-red-300' : 'border-gray-300'
                   }`}
                   style={{ borderColor: 'var(--color-accent)' }}
@@ -196,7 +196,7 @@ const Login = () => {
               </div>
             </div>
 
-            <div className="flex items-center justify-between">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-0">
               <div className="flex items-center">
                 <input
                   id="remember-me"
@@ -221,7 +221,7 @@ const Login = () => {
               <button
                 type="submit"
                 disabled={loading}
-                className={`w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white ${
+                className={`w-full flex justify-center py-2 md:py-3 px-4 border border-transparent rounded-md shadow-sm text-sm md:text-base font-medium text-white ${
                   loading 
                     ? 'cursor-not-allowed' 
                     : 'btn cursor-pointer focus:outline-none focus:ring-2 focus:ring-offset-2'

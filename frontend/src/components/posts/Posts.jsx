@@ -104,9 +104,9 @@ const Posts = () => {
   }
 
   return (
-    <div className="container py-20">
+    <div className="container py-8 md:py-20 px-4">
       <div className="max-w-4xl mx-auto">
-        <h1 className="text-3xl font-bold mb-8">Posts</h1>
+        <h1 className="text-2xl md:text-3xl font-bold mb-6 md:mb-8">Posts</h1>
         
         {/* Trending Posts */}
         <TrendingPosts />
@@ -118,10 +118,10 @@ const Posts = () => {
         <PostForm />
         
         {/* Posts Feed */}
-        <div className="space-y-6">
+        <div className="space-y-4 md:space-y-6">
           {filteredPosts.length === 0 ? (
-            <div className="text-center py-8">
-              <p className="text-gray-500 text-lg">
+            <div className="text-center py-6 md:py-8">
+              <p className="text-gray-500 text-base md:text-lg">
                 {posts.length === 0 
                   ? "No posts found. Be the first to create a post!"
                   : "No posts match your search criteria."

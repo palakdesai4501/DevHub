@@ -9,6 +9,7 @@ const Navbar = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const dropdownRef = useRef(null);
 
   const onLogout = () => {
@@ -45,7 +46,7 @@ const Navbar = () => {
   };
 
   const authLinks = (
-    <ul className="flex items-center space-x-6">
+    <ul className="hidden md:flex items-center space-x-6">
       <li>
         <Link 
           to="/profiles" 
@@ -151,7 +152,7 @@ const Navbar = () => {
   );
 
   const guestLinks = (
-    <ul className="flex items-center space-x-6">
+    <ul className="hidden md:flex items-center space-x-6">
       <li>
         <Link 
           to="/profiles" 
@@ -196,7 +197,8 @@ const Navbar = () => {
             </Link>
           </div>
           
-          <div className="flex items-center">
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex items-center">
             {/* Show user name if authenticated */}
             {!loading && isAuthenticated && user && (
               <span className="text-white mr-4 font-extrabold">
@@ -210,7 +212,128 @@ const Navbar = () => {
               </>
             )}
           </div>
+
+          {/* Mobile menu button */}
+          <div className="md:hidden flex items-center">
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="text-white hover:text-gray-300 focus:outline-none focus:text-gray-300"
+              aria-label="Toggle mobile menu"
+            >
+              <i className={`fas ${mobileMenuOpen ? 'fa-times' : 'fa-bars'} text-xl`}></i>
+            </button>
+          </div>
         </div>
+
+        {/* Mobile Navigation Menu */}
+        {mobileMenuOpen && (
+          <div className="md:hidden">
+            <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-gray-700">
+              {/* Show user name if authenticated */}
+              {!loading && isAuthenticated && user && (
+                <div className="px-3 py-2 text-white font-extrabold border-b border-gray-600">
+                  Welcome, {user.name}!
+                </div>
+              )}
+              
+              {/* Mobile Links */}
+              {!loading && (
+                <>
+                  {isAuthenticated ? (
+                    <>
+                      <Link
+                        to="/profiles"
+                        className={`block px-3 py-2 text-white hover:text-gray-300 transition-colors ${
+                          location.pathname === '/profiles' ? 'text-yellow-300' : ''
+                        }`}
+                        onClick={() => setMobileMenuOpen(false)}
+                      >
+                        <i className="fas fa-users mr-2"></i>
+                        Developers
+                      </Link>
+                      <Link
+                        to="/posts"
+                        className={`block px-3 py-2 text-white hover:text-gray-300 transition-colors ${
+                          location.pathname === '/posts' ? 'text-yellow-300' : ''
+                        }`}
+                        onClick={() => setMobileMenuOpen(false)}
+                      >
+                        <i className="fas fa-comments mr-2"></i>
+                        Posts
+                      </Link>
+                      <Link
+                        to="/notifications"
+                        className="block px-3 py-2 text-white hover:text-gray-300 transition-colors relative"
+                        onClick={() => setMobileMenuOpen(false)}
+                      >
+                        <i className="fas fa-bell mr-2"></i>
+                        Notifications
+                        {unreadCount > 0 && (
+                          <span className="ml-2 bg-red-500 text-white text-xs rounded-full h-4 w-4 inline-flex items-center justify-center">
+                            {unreadCount}
+                          </span>
+                        )}
+                      </Link>
+                      <Link
+                        to="/dashboard"
+                        className={`block px-3 py-2 text-white hover:text-gray-300 transition-colors ${
+                          location.pathname === '/dashboard' ? 'text-yellow-300' : ''
+                        }`}
+                        onClick={() => setMobileMenuOpen(false)}
+                      >
+                        <i className="fas fa-user mr-2"></i>
+                        Dashboard
+                      </Link>
+                      <button
+                        onClick={() => {
+                          onLogout();
+                          setMobileMenuOpen(false);
+                        }}
+                        className="block w-full text-left px-3 py-2 text-white hover:text-gray-300 transition-colors"
+                      >
+                        <i className="fas fa-sign-out-alt mr-2"></i>
+                        Logout
+                      </button>
+                    </>
+                  ) : (
+                    <>
+                      <Link
+                        to="/profiles"
+                        className={`block px-3 py-2 text-white hover:text-gray-300 transition-colors ${
+                          location.pathname === '/profiles' ? 'text-yellow-300' : ''
+                        }`}
+                        onClick={() => setMobileMenuOpen(false)}
+                      >
+                        <i className="fas fa-users mr-2"></i>
+                        Developers
+                      </Link>
+                      <Link
+                        to="/register"
+                        className={`block px-3 py-2 text-white hover:text-gray-300 transition-colors ${
+                          location.pathname === '/register' ? 'text-yellow-300' : ''
+                        }`}
+                        onClick={() => setMobileMenuOpen(false)}
+                      >
+                        <i className="fas fa-user-plus mr-2"></i>
+                        Register
+                      </Link>
+                      <Link
+                        to="/login"
+                        className={`block px-3 py-2 text-white hover:text-gray-300 transition-colors ${
+                          location.pathname === '/login' ? 'text-yellow-300' : ''
+                        }`}
+                        onClick={() => setMobileMenuOpen(false)}
+                      >
+                        <i className="fas fa-sign-in-alt mr-2"></i>
+                        Login
+                      </Link>
+                    </>
+                  )}
+                </>
+              )}
+            </div>
+          </div>
+        )}
       </div>
     </nav>
   );

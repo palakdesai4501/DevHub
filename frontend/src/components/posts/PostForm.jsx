@@ -120,22 +120,22 @@ const PostForm = () => {
   };
 
   return (
-    <div className="bg-white p-6 rounded-lg shadow mb-6 card-animate">
-      <h3 className="text-xl font-semibold mb-4">Create a Post</h3>
+    <div className="bg-white p-4 md:p-6 rounded-lg shadow mb-4 md:mb-6 card-animate">
+      <h3 className="text-lg md:text-xl font-semibold mb-4">Create a Post</h3>
       <form onSubmit={handleSubmit}>
         <textarea
           name="text"
           cols="30"
-          rows="4"
+          rows="3"
           placeholder="What's on your mind?"
           value={text}
           onChange={(e) => setText(e.target.value)}
-          className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent mb-4"
+          className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent mb-4 text-sm md:text-base"
           required={!image}
         />
         
         {/* Category and Tags */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 md:gap-4 mb-4">
           {/* Category Selection */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -144,7 +144,7 @@ const PostForm = () => {
             <select
               value={category}
               onChange={(e) => setCategory(e.target.value)}
-              className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full p-2 md:p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm md:text-base"
             >
               {categories.map(cat => (
                 <option key={cat.value} value={cat.value}>
@@ -166,24 +166,24 @@ const PostForm = () => {
                 onChange={(e) => setTagInput(e.target.value)}
                 onKeyPress={(e) => e.key === 'Enter' && addTag(e)}
                 placeholder="Add tags..."
-                className="flex-1 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="flex-1 p-2 md:p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm md:text-base"
                 maxLength="20"
               />
               <button
                 type="button"
                 onClick={addTag}
                 disabled={!tagInput.trim() || tags.length >= 5}
-                className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="px-3 py-2 md:px-4 md:py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed text-xs md:text-sm"
               >
                 Add
               </button>
             </div>
             {tags.length > 0 && (
-              <div className="flex flex-wrap gap-2 mt-2">
+              <div className="flex flex-wrap gap-1 md:gap-2 mt-2">
                 {tags.map(tag => (
                   <span
                     key={tag}
-                    className="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-sm flex items-center space-x-1"
+                    className="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs md:text-sm flex items-center space-x-1"
                   >
                     <span>#{tag}</span>
                     <button
@@ -203,7 +203,7 @@ const PostForm = () => {
         {/* Image Upload Area */}
         <div className="mb-4">
           <div
-            className={`border-2 border-dashed rounded-lg p-6 text-center transition-colors ${
+            className={`border-2 border-dashed rounded-lg p-4 md:p-6 text-center transition-colors ${
               isDragging
                 ? 'border-blue-500 bg-blue-50'
                 : 'border-gray-300 hover:border-gray-400'
@@ -217,20 +217,20 @@ const PostForm = () => {
                 <img
                   src={imagePreview}
                   alt="Preview"
-                  className="max-w-full max-h-64 mx-auto rounded-lg"
+                  className="max-w-full max-h-48 md:max-h-64 mx-auto rounded-lg"
                 />
                 <button
                   type="button"
                   onClick={removeImage}
-                  className="absolute top-2 right-2 bg-red-500 text-white rounded-full w-8 h-8 flex items-center justify-center hover:bg-red-600"
+                  className="absolute top-2 right-2 bg-red-500 text-white rounded-full w-6 h-6 md:w-8 md:h-8 flex items-center justify-center hover:bg-red-600 text-sm md:text-base"
                 >
                   ×
                 </button>
               </div>
             ) : (
               <div>
-                <i className="fas fa-cloud-upload-alt text-4xl text-gray-400 mb-2"></i>
-                <p className="text-gray-600 mb-2">
+                <i className="fas fa-cloud-upload-alt text-3xl md:text-4xl text-gray-400 mb-2"></i>
+                <p className="text-gray-600 mb-2 text-sm md:text-base">
                   Drag and drop an image here, or{' '}
                   <button
                     type="button"
@@ -240,7 +240,7 @@ const PostForm = () => {
                     browse
                   </button>
                 </p>
-                <p className="text-sm text-gray-500">Supports JPG, PNG, GIF up to 5MB</p>
+                <p className="text-xs md:text-sm text-gray-500">Supports JPG, PNG, GIF up to 5MB</p>
               </div>
             )}
             <input
@@ -253,12 +253,12 @@ const PostForm = () => {
           </div>
         </div>
 
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-0">
           <div className="flex space-x-2">
             <button
               type="button"
               onClick={() => fileInputRef.current?.click()}
-              className="text-gray-500 hover:text-gray-700 p-2 rounded-lg hover:bg-gray-100"
+              className="text-gray-500 hover:text-gray-700 p-2 rounded-lg hover:bg-gray-100 text-sm md:text-base"
               title="Add Image"
             >
               <i className="fas fa-image"></i>
@@ -266,7 +266,7 @@ const PostForm = () => {
             <button
               type="button"
               onClick={() => setText('')}
-              className="text-gray-500 hover:text-gray-700 p-2 rounded-lg hover:bg-gray-100"
+              className="text-gray-500 hover:text-gray-700 p-2 rounded-lg hover:bg-gray-100 text-sm md:text-base"
               title="Clear Text"
             >
               <i className="fas fa-eraser"></i>
@@ -276,7 +276,7 @@ const PostForm = () => {
           <button
             type="submit"
             disabled={loading || uploading || (!text.trim() && !image)}
-            className="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2"
+            className="bg-blue-500 text-white px-4 py-2 md:px-6 md:py-2 rounded-lg hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2 text-sm md:text-base"
           >
             {loading || uploading ? (
               <>
