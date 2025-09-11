@@ -215,7 +215,7 @@ devhub/
 
 ### Live Application
 - **Frontend**: https://dev-hub-black.vercel.app/
-- **Backend**: https://devhub-production-2ba8.up.railway.app
+- **Backend**: https://devhub-30ad.onrender.com
 - **Database**: MongoDB Atlas
 
 ### Frontend Deployment (Vercel)
@@ -227,21 +227,21 @@ devhub/
 
 2. **Environment Variables (Vercel)**
    ```env
-   VITE_API_BASE_URL=https://your-backend-url.up.railway.app
+   VITE_API_BASE_URL=https://your-backend-url.onrender.com
    VITE_GOOGLE_CLIENT_ID=your_google_oauth_client_id
    ```
 
-### Backend Deployment (Railway)
+### Backend Deployment (Render)
 
-1. **Deploy to Railway**
+1. **Deploy to Render**
    - Connect your GitHub repository
-   - Set root directory to `backend` or use custom build commands
+   - Set root directory to `/` (or leave empty)
    - Add environment variables
 
-2. **Environment Variables (Railway)**
+2. **Environment Variables (Render)**
    ```env
    NODE_ENV=production
-   PORT=5001
+   PORT=10000
    MONGO_URI=mongodb+srv://USER:PASS@CLUSTER.mongodb.net/devhub
    JWT_SECRET=your_super_secret_jwt_key
    GITHUB_TOKEN=your_github_personal_access_token
@@ -251,9 +251,9 @@ devhub/
    GOOGLE_CLIENT_ID=your_google_oauth_client_id
    ```
 
-3. **Build Commands (if needed)**
-   - Build Command: `cd backend && npm install`
-   - Start Command: `cd backend && npm start`
+3. **Build Commands**
+   - Build Command: `npm install`
+   - Start Command: `cd backend && node server.js`
 
 ### Database Setup
 
@@ -304,7 +304,7 @@ VITE_GOOGLE_CLIENT_ID=your_google_oauth_client_id
 **Frontend can't connect to backend:**
 - Check `VITE_API_BASE_URL` in Vercel environment variables
 - Ensure CORS is configured with production frontend URL
-- Verify Railway backend is running
+- Verify Render backend is running
 
 **Google OAuth not working:**
 - Add production URL to Google Cloud Console authorized origins
@@ -312,16 +312,16 @@ VITE_GOOGLE_CLIENT_ID=your_google_oauth_client_id
 - Ensure Google script is loaded in `index.html`
 
 **Image uploads failing:**
-- Verify all Cloudinary environment variables in Railway
+- Verify all Cloudinary environment variables in Render
 - Check Cloudinary account limits and usage
 
 **Database connection errors:**
 - Verify MongoDB Atlas connection string
-- Check IP whitelist (allow 0.0.0.0/0 for Railway)
+- Check IP whitelist (allow 0.0.0.0/0 for Render)
 - Ensure database user has proper permissions
 
-**Build failures on Railway:**
-- Check if root directory is set to `backend`
+**Build failures on Render:**
+- Check if root directory is set to `/`
 - Use custom build commands if needed
 - Verify all dependencies in `package.json`
 
