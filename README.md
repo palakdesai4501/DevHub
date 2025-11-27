@@ -1,22 +1,22 @@
-# 🚀 DevHub - Developer Social Network
+# DevHub - Developer Social Network
 
 A full-stack MERN (MongoDB, Express.js, React.js, Node.js) social network platform designed specifically for developers to connect, share knowledge, and build their professional network.
 
-## ✨ Features
+## Features
 
-### 🔐 Authentication & User Management
+### Authentication & User Management
 - User registration and login with JWT authentication
 - **Google OAuth 2.0** sign-in with One Tap integration
 - Protected routes and secure token management
 - User profile management with avatar support
 
-### 👤 Profile System
+### Profile System
 - Complete developer profiles with bio, skills, and social links
 - Experience and education management
 - Professional portfolio showcase
 - Skills tagging and categorization
 
-### 📝 Advanced Posts System
+### Advanced Posts System
 - **Rich Text Posts** with markdown support
 - **Image Upload** with drag-and-drop functionality
 - **Post Categories & Tags** for better organization
@@ -26,30 +26,30 @@ A full-stack MERN (MongoDB, Express.js, React.js, Node.js) social network platfo
 - **Multiple Reactions** (Like, Love, Laugh, Wow, Sad, Angry)
 - **Trending Posts** algorithm based on engagement
 
-### 🔍 Search & Discovery
+### Search & Discovery
 - Advanced search and filtering for posts
 - User search and discovery
 - Category-based post filtering
 - Tag-based content organization
 
-### 🔔 Notifications System
+### Notifications System
 - **Real-time notifications** with Socket.IO for likes, comments, and follows
 - Read/unread status management
 - **Clear all notifications** functionality
 - Notification preferences
 
-### 👥 Social Features
+### Social Features
 - **User Following System** with follower counts
 - **Post Comments** with threaded discussions
 - **Like/Unlike** functionality
 - **Social Sharing** to external platforms
 
-### 📊 Analytics & Insights
+### Analytics & Insights
 - Post engagement analytics
 - User activity tracking
 - Performance insights and recommendations
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 ### Frontend
 - **React 18** with functional components and hooks
@@ -70,7 +70,7 @@ A full-stack MERN (MongoDB, Express.js, React.js, Node.js) social network platfo
 - **Cloudinary + Multer** for image uploads and storage
 - **CORS** for cross-origin requests
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Prerequisites
 - Node.js (v16 or higher)
@@ -184,7 +184,7 @@ devhub/
 └── README.md
 ```
 
-## 🌟 Key Features in Detail
+## Key Features in Detail
 
 ### Advanced Posts System
 - **Image Upload**: Drag-and-drop image upload with preview
@@ -211,7 +211,7 @@ devhub/
 - **Profile Analytics**: User engagement metrics
 - **Social Sharing**: Share profiles and posts externally
 
-## 🚀 Deployment
+## Deployment
 
 ### Live Application
 - **Frontend**: https://dev-hub-black.vercel.app/
@@ -297,7 +297,7 @@ VITE_GOOGLE_CLIENT_ID=your_google_oauth_client_id
 3. **Reactions**: Add new reactions in `PostReactions.jsx`
 4. **Analytics**: Customize analytics in `PostAnalytics.jsx`
 
-## 🐛 Troubleshooting
+## Troubleshooting
 
 ### Common Deployment Issues
 
@@ -325,7 +325,7 @@ VITE_GOOGLE_CLIENT_ID=your_google_oauth_client_id
 - Use custom build commands if needed
 - Verify all dependencies in `package.json`
 
-## 🤝 Contributing
+## Contributing
 
 1. Fork the repository
 2. Create a feature branch (`git checkout -b feature/amazing-feature`)
@@ -333,11 +333,11 @@ VITE_GOOGLE_CLIENT_ID=your_google_oauth_client_id
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
 
-## 📝 License
+## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
 - React team for the amazing framework
 - Tailwind CSS for the utility-first CSS framework
@@ -345,7 +345,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - Express.js for the robust backend framework
 - Font Awesome for the beautiful icons
 
-## 📞 Support
+## Support
 
 If you have any questions or need help with deployment, feel free to:
 
