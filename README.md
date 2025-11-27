@@ -1,6 +1,6 @@
 # Demo
 
-https://github.com/user-attachments/assets/f2bcc127-d947-41f4-b8ba-b10acc465556
+https://github.com/user-attachments/assets/8ad06dde-551b-4c30-8a1d-13b921aea83f
 
 # DevHub - Developer Social Network
 
